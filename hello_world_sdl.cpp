@@ -45,30 +45,53 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
 
 int main(int argc, char* args[])
 {
-  //The images
-  SDL_Surface* hello = NULL;
-  SDL_Surface* screen = NULL;
+  SDL_Surface *screen = NULL;
+  SDL_Surface *background = NULL;
+  SDL_Surface *message= NULL;
 
-  //Start SDL
-  SDL_Init(SDL_INIT_EVERYTHING);
 
-  //Set up screen
-  screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
+  //Initialize all SDL subsystems
+  if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
+  {
+    return 1;
+  }
 
-  //Load image
-  hello = SDL_LoadBMP("hello.bmp");
+  //Set up the screen
+  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
 
-  //Apply image to screen
-  SDL_BlitSurface(hello, NULL, screen, NULL);
+  //If there was an error in setting up the screen
+  if(screen == NULL)
+  {
+    return 1;
+  }
 
-  //Update screen
-  SDL_Flip(screen);
+  //Set the window caption
+  SDL_WM_SetCaption("Hello World", NULL);
 
-  //Pause
+  //Load the images
+  message = load_image("hello.bmp");
+  background = load_image("background.bmp");
+
+  //Apply the background to the screen
+  apply_surface(320, 0, background, screen);
+  apply_surface(0, 240, background, screen);
+  apply_surface(0, 0, background, screen);
+  apply_surface(320, 240, background, screen);
+
+  //Apply the message to the screen
+  apply_surface(180, 140, message, screen);
+
+  if(SDL_Flip(screen) == -1)
+  {
+    return 1;
+  }
+
+  //Wait
   SDL_Delay(2000);
 
-  //Free the loaded image
-  SDL_FreeSurface(hello);
+  //Free the surfaces
+  SDL_FreeSurface(message);
+  SDL_FreeSurface(background);
 
   //Quit SDL
   SDL_Quit();
