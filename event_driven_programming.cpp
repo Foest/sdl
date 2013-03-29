@@ -6,6 +6,10 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
+SDL_Surface *screen = NULL;
+SDL_Surface *image = NULL;
+SDL_Event event;
+
 SDL_Surface *load_image(std::string filename)
 {
   //Temporary storage for the image that's loaded
@@ -44,58 +48,92 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
   SDL_BlitSurface(source, NULL, destination, &offset);
 }
 
-int main(int argc, char* args[])
+bool init()
 {
-  SDL_Surface *screen = NULL;
-  SDL_Surface *background = NULL;
-  SDL_Surface *message= NULL;
-
-
-  //Initialize all SDL subsystems
+  //Init SDL subsystems
   if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
   {
-    return 1;
+    return false;
   }
 
-  //Set up the screen
+  //Set up screen
   screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
 
-  //If there was an error in setting up the screen
+  //If there was an error setting up the screen
   if(screen == NULL)
+  {
+    return false;
+  }
+
+  SDL_WM_SetCaption("Event test", NULL);
+
+  return true;
+}
+
+bool load_files()
+{
+  //Load image
+  image = load_image("x.png");
+
+  //If there was an error
+  if(image == NULL)
+  {
+    return false;
+  }
+
+  return true;
+}
+
+void clean_up()
+{
+  //Free the image
+  SDL_FreeSurface(image);
+
+  //Quit SDL
+  SDL_Quit();
+}
+
+
+
+int main(int argc, char* args[])
+{
+  bool quit = false;
+
+  if(init() == false)
   {
     return 1;
   }
 
-  //Set the window caption
-  SDL_WM_SetCaption("Hello World", NULL);
+  //Load the files
+  if(load_files() == false)
+  {
+    return 1;
+  }
 
-  //Load the images
-  message = load_image("look.png");
-  background = load_image("background.bmp");
+  //Apply the surface to the screen
+  apply_surface(0, 0, image, screen);
 
-  //Apply the background to the screen
-  apply_surface(320, 0, background, screen);
-  apply_surface(0, 240, background, screen);
-  apply_surface(0, 0, background, screen);
-  apply_surface(320, 240, background, screen);
-
-  //Apply the message to the screen
-  apply_surface(180, 140, message, screen);
-
+  //Update screen
   if(SDL_Flip(screen) == -1)
   {
     return 1;
   }
 
-  //Wait
-  SDL_Delay(2000);
+  //While user hasn't quit
+  while(quit == false)
+  {
+    while(SDL_PollEvent(&event))
+    {
+      //If the user has Xed out the window
+      if(event.type == SDL_QUIT)
+      {
+        quit = true;
+      }
+    }
+  }
 
-  //Free the surfaces
-  SDL_FreeSurface(message);
-  SDL_FreeSurface(background);
-
-  //Quit SDL
-  SDL_Quit();
+  //Free the surface and quit
+  clean_up();
 
   return 0;
 }
