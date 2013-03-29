@@ -1,4 +1,5 @@
 #include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #include <string>
 
 const int SCREEN_WIDTH = 640;
@@ -14,7 +15,7 @@ SDL_Surface *load_image(std::string filename)
   SDL_Surface *optimizedImage = NULL;
 
   //Load the image
-  loadedImage = SDL_LoadBMP(filename.c_str());
+  loadedImage = IMG_Load(filename.c_str());
 
   //If nothing went wrong in loading the image
   if(loadedImage != NULL)
@@ -69,7 +70,7 @@ int main(int argc, char* args[])
   SDL_WM_SetCaption("Hello World", NULL);
 
   //Load the images
-  message = load_image("hello.bmp");
+  message = load_image("look.png");
   background = load_image("background.bmp");
 
   //Apply the background to the screen
