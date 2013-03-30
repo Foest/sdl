@@ -85,11 +85,10 @@ bool init()
 bool load_files()
 {
   //Load image
-  background = load_image("background.png");
-  foo = load_image("foo.png");
+  dots = load_image("dots.png");
 
   //If there was an error loading the images
-  if(background == NULL || foo == NULL)
+  if(dots == NULL)
   {
     return false;
   }
@@ -100,8 +99,7 @@ bool load_files()
 void clean_up()
 {
   //Free the images
-  SDL_FreeSurface(background);
-  SDL_FreeSurface(foo);
+  SDL_FreeSurface(dots);
 
   //Quit SDL
   SDL_Quit();
