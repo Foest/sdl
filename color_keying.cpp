@@ -99,8 +99,9 @@ bool load_files()
 
 void clean_up()
 {
-  //Free the image
-  SDL_FreeSurface(image);
+  //Free the images
+  SDL_FreeSurface(background);
+  SDL_FreeSurface(foo);
 
   //Quit SDL
   SDL_Quit();
