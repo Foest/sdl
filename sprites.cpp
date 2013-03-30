@@ -122,9 +122,38 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  //Clip range for the top left
+  clip[0].x=0;
+  clip[0].y=0;
+  clip[0].w=100;
+  clip[0].h=100;
+
+  //Clip range for the top right
+  clip[1].x=100;
+  clip[1].y=0;
+  clip[1].w=100;
+  clip[1].h=100;
+
+  //Clip range for the bottom left
+  clip[2].x=0;
+  clip[2].y=100;
+  clip[2].w=100;
+  clip[2].h=100;
+
+  //Clip range for the bottom left
+  clip[3].x=100;
+  clip[3].y=100;
+  clip[3].w=100;
+  clip[3].h=100;
+
+  //Fill screen white
+  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+
   //Apply the surface to the screen
-  apply_surface(0, 0, background, screen);
-  apply_surface(240, 190, foo, screen);
+  apply_surface(0, 0, dots, screen, &clip[0]);
+  apply_surface(540, 0, dots, screen, &clip[1]);
+  apply_surface(0, 380, dots, screen, &clip[2]);
+  apply_surface(540, 380, dots, screen, &clip[3]);
 
   //Update screen
   if(SDL_Flip(screen) == -1)
