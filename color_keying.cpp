@@ -125,7 +125,8 @@ int main(int argc, char* args[])
   }
 
   //Apply the surface to the screen
-  apply_surface(0, 0, image, screen);
+  apply_surface(0, 0, background, screen);
+  apply_surface(240, 190, foo, screen);
 
   //Update screen
   if(SDL_Flip(screen) == -1)
