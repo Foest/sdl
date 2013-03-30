@@ -47,7 +47,7 @@ SDL_Surface *load_image(std::string filename)
   return optimizedImage;
 }
 
-void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
+void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
 {
   //Make a temporary rectangle to hold the offsets
   SDL_Rect offset;
@@ -77,7 +77,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Event test", NULL);
+  SDL_WM_SetCaption("Clipping", NULL);
 
   return true;
 }
