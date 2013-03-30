@@ -7,7 +7,8 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
 SDL_Surface *screen = NULL;
-SDL_Surface *image = NULL;
+SDL_Surface *background = NULL;
+SDL_Surface *foo = NULL;
 SDL_Event event;
 
 SDL_Surface *load_image(std::string filename)
@@ -73,10 +74,11 @@ bool init()
 bool load_files()
 {
   //Load image
-  image = load_image("x.png");
+  background = load_image("background.png");
+  foo = load_image("foo.png");
 
-  //If there was an error
-  if(image == NULL)
+  //If there was an error loading the images
+  if(background == NULL || foo == NULL)
   {
     return false;
   }
