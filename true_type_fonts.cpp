@@ -81,7 +81,12 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Clipping", NULL);
+  if(TTF_Init() == -1)
+  {
+    return false;
+  }
+
+  SDL_WM_SetCaption("TTF Test", NULL);
 
   return true;
 }
