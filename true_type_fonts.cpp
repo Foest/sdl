@@ -94,10 +94,18 @@ bool init()
 bool load_files()
 {
   //Load image
-  dots = load_image("dots.png");
+  background = load_image("background.png");
+
+  //Open the font
+  font = TTF_OpenFont("lazy.ttf", 28);
 
   //If there was an error loading the images
-  if(dots == NULL)
+  if(background == NULL)
+  {
+    return false;
+  }
+
+  if(font == NULL)
   {
     return false;
   }
@@ -108,7 +116,12 @@ bool load_files()
 void clean_up()
 {
   //Free the images
-  SDL_FreeSurface(dots);
+  SDL_FreeSurface(background);
+  SDL_FreeSurface(message);
+
+  TTF_CloseFont(font);
+
+  TTF_Quit();
 
   //Quit SDL
   SDL_Quit();
@@ -131,38 +144,16 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  //Clip range for the top left
-  clip[0].x=0;
-  clip[0].y=0;
-  clip[0].w=100;
-  clip[0].h=100;
+ message = TTF_RenderText_Solid(font, "The quick brown fox jumped over the lazy dog", textColor);
 
-  //Clip range for the top right
-  clip[1].x=100;
-  clip[1].y=0;
-  clip[1].w=100;
-  clip[1].h=100;
-
-  //Clip range for the bottom left
-  clip[2].x=0;
-  clip[2].y=100;
-  clip[2].w=100;
-  clip[2].h=100;
-
-  //Clip range for the bottom left
-  clip[3].x=100;
-  clip[3].y=100;
-  clip[3].w=100;
-  clip[3].h=100;
-
-  //Fill screen white
-  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+  if(message == NULL)
+  {
+    return 1;
+  }
 
   //Apply the surface to the screen
-  apply_surface(0, 0, dots, screen, &clip[0]);
-  apply_surface(540, 0, dots, screen, &clip[1]);
-  apply_surface(0, 380, dots, screen, &clip[2]);
-  apply_surface(540, 380, dots, screen, &clip[3]);
+  apply_surface(0, 0, background, screen);
+  apply_surface(0, 150, message, screen);
 
   //Update screen
   if(SDL_Flip(screen) == -1)
