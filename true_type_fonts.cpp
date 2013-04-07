@@ -1,5 +1,7 @@
+#include "iostream"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
 #include <string>
 
 const int SCREEN_WIDTH = 640;
