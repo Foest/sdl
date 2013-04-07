@@ -8,10 +8,12 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
+SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *dots = NULL;
+SDL_Surface *message = NULL;
 SDL_Event event;
-SDL_Rect clip[4];
+TTF_Font *font = NULL;
+SDL_Color textColor = {255, 255, 255};
 
 SDL_Surface *load_image(std::string filename)
 {
