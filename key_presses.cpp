@@ -146,12 +146,13 @@ int main(int argc, char* args[])
 
  message = TTF_RenderText_Solid(font, "The quick brown fox jumped over the lazy dog", textColor);
 
+  //Make sure message initialized
   if(message == NULL)
   {
     return 1;
   }
 
-  //Apply the surface to the screen
+  //Apply the surfaces to the screen
   apply_surface(0, 0, background, screen);
   apply_surface(0, 150, message, screen);
 
