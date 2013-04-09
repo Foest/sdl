@@ -148,23 +148,11 @@ int main(int argc, char* args[])
     return 1;
   }
 
- message = TTF_RenderText_Solid(font, "The quick brown fox jumped over the lazy dog", textColor);
-
-  //Make sure message initialized
-  if(message == NULL)
-  {
-    return 1;
-  }
-
-  //Apply the surfaces to the screen
-  apply_surface(0, 0, background, screen);
-  apply_surface(0, 150, message, screen);
-
-  //Update screen
-  if(SDL_Flip(screen) == -1)
-  {
-    return 1;
-  }
+  message = TTF_RenderText_Solid(font, "Message will go here.", textColor);
+  upMessage = TTF_RenderText_Solid(font, "Up was pressed.", textColor);
+  downMessage = TTF_RenderText_Solid(font, "Down was pressed.", textColor);
+  leftMessage = TTF_RenderText_Solid(font, "Left was pressed.", textColor);
+  rightMessage = TTF_RenderText_Solid(font, "Right was pressed.", textColor);
 
   //While user hasn't quit
   while(quit == false)
