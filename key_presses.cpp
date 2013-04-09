@@ -148,6 +148,7 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  //ADD ERROR CHECKING FOR THIS STUFF!!!!
   message = TTF_RenderText_Solid(font, "Message will go here.", textColor);
   upMessage = TTF_RenderText_Solid(font, "Up was pressed.", textColor);
   downMessage = TTF_RenderText_Solid(font, "Down was pressed.", textColor);
