@@ -175,6 +175,19 @@ int main(int argc, char* args[])
       {
         quit = true;
       }
+
+    }
+    if(message != NULL)
+    {
+      apply_surface(0, 0, background, screen);
+      apply_surface((SCREEN_WIDTH - message->w) / 2, (SCREEN_HEIGHT - message->h) / 2, message, screen);
+
+      message = NULL;
+    }
+
+    if(SDL_Flip(screen) == -1)
+    {
+      return 1;
     }
   }
 
