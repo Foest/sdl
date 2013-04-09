@@ -10,14 +10,15 @@ const int SCREEN_BPP = 32;
 
 SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *message = NULL;
-SDL_Surface *upMessage = NULL;
-SDL_Surface *downMessage = NULL;
-SDL_Surface *leftMessage = NULL;
-SDL_Surface *rightMessage = NULL;
+SDL_Surface *buttonSheet = NULL;
 SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {255, 255, 255};
+SDL_Rect clips[4];
+int CLIP_MOUSEOVER = 0;
+int CLIP_MOUSEOUT = 1;
+int CLIP_MOUSEDOWN = 2;
+int CLIP_MOUSEUP = 3;
 
 
 
