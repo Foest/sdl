@@ -190,7 +190,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("TTF Test", NULL);
+  SDL_WM_SetCaption("MOUSE EVENTS!!", NULL);
 
   return true;
 }
@@ -199,12 +199,13 @@ bool load_files()
 {
   //Load image
   background = load_image("background.png");
+  buttonSheet = load_image("button.png");
 
   //Open the font
   font = TTF_OpenFont("lazy.ttf", 28);
 
   //If there was an error loading the images
-  if(background == NULL)
+  if(background == NULL || buttonSheet == NULL)
   {
     return false;
   }
@@ -221,7 +222,7 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
-  SDL_FreeSurface(message);
+  SDL_FreeSurface(buttonSheet);
 
   TTF_CloseFont(font);
 
