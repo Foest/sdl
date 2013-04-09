@@ -249,50 +249,31 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  //ADD ERROR CHECKING FOR THIS STUFF!!!!
-  message = TTF_RenderText_Solid(font, "Message will go here.", textColor);
-  upMessage = TTF_RenderText_Solid(font, "Up was pressed.", textColor);
-  downMessage = TTF_RenderText_Solid(font, "Down was pressed.", textColor);
-  leftMessage = TTF_RenderText_Solid(font, "Left was pressed.", textColor);
-  rightMessage = TTF_RenderText_Solid(font, "Right was pressed.", textColor);
+  set_clips();
+
+  Button myButton(170, 120, 320, 240);
 
   //While user hasn't quit
   while(quit == false)
   {
-    while(SDL_PollEvent(&event))
+    if(SDL_PollEvent(&event))
     {
+      myButton.handle_events();
 
-      if(event.type == SDL_KEYDOWN)
-      {
-        switch(event.key.keysym.sym)
-        {
-          case SDLK_UP: message = upMessage; break;
-          case SDLK_DOWN: message = downMessage; break;
-          case SDLK_LEFT: message = leftMessage; break;
-          case SDLK_RIGHT: message = rightMessage; break;
-        }
-      }
-
-      else if(event.type == SDL_QUIT)
+      if(event.type == SDL_QUIT)
       {
         quit = true;
       }
-
-    }
-    if(message != NULL)
-    {
-      apply_surface(0, 0, background, screen);
-      apply_surface((SCREEN_WIDTH - message->w) / 2, (SCREEN_HEIGHT - message->h) / 2, message, screen);
-
-      message = NULL;
     }
 
-    if(SDL_Flip(screen) == -1)
-    {
-      return 1;
-    }
+  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 
-  //Free the surface and quit
+  myButton.show();
+
+  if(SDL_Flip(screen) == -1)
+  {
+    return 1;
+  }
 
   }
 
