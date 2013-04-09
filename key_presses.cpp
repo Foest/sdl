@@ -159,8 +159,19 @@ int main(int argc, char* args[])
   {
     while(SDL_PollEvent(&event))
     {
-      //If the user has Xed out the window
-      if(event.type == SDL_QUIT)
+
+      if(event.type == SDL_KEYDOWN)
+      {
+        switch(event.key.keysym.sym)
+        {
+          case SDLK_UP: message = upMessage; break;
+          case SDLK_DOWN: message = downMessage; break;
+          case SDLK_LEFT: message = leftMessage; break;
+          case SDLK_RIGHT: message = rightMessage; break;
+        }
+      }
+
+      else if(event.type == SDL_QUIT)
       {
         quit = true;
       }
