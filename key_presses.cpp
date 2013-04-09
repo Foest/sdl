@@ -189,10 +189,11 @@ int main(int argc, char* args[])
     {
       return 1;
     }
-  }
 
   //Free the surface and quit
-  clean_up();
 
+  }
+
+  clean_up();
   return 0;
 }
