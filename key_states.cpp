@@ -150,32 +150,49 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  set_clips();
-
-  Button myButton(170, 120, 320, 240);
+  apply_surface(0, 0, background, screen);
+  up = TTF_RenderText_Solid(font, "Up", textColor);
+  down= TTF_RenderText_Solid(font, "Down", textColor);
+  left= TTF_RenderText_Solid(font, "Left", textColor);
+  right= TTF_RenderText_Solid(font, "Right", textColor);
 
   //While user hasn't quit
   while(quit == false)
   {
-    if(SDL_PollEvent(&event))
+    while(SDL_PollEvent(&event))
     {
-      myButton.handle_events();
-
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
 
-  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    Uint8 *keystates = SDL_GetKeyState(NULL);
 
-  myButton.show();
+    if(keystates[SDLK_UP])
+    {
+      apply_surface((SCREEN_WIDTH - up->w) / 2, (SCREEN_HEIGHT / 2 - up->h) / 2, up, screen);
+    }
 
-  if(SDL_Flip(screen) == -1)
-  {
-    return 1;
-  }
+    if(keystates[SDLK_DOWN])
+    {
+      apply_surface((SCREEN_WIDTH - down->w) / 2, (SCREEN_HEIGHT / 2 - down->h) / 2 + (SCREEN_HEIGHT / 2), down, screen);
+    }
 
+    if(keystates[SDLK_LEFT])
+    {
+      apply_surface((SCREEN_WIDTH / 2 - left->w) / 2, (SCREEN_HEIGHT / 2 - left->h) / 2, left, screen);
+    }
+
+    if(keystates[SDLK_RIGHT])
+    {
+      apply_surface((SCREEN_WIDTH / 2 - right->w) / 2 + (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2 - right->h) / 2, right, screen);
+    }
+
+    if(SDL_Flip(screen) == -1)
+    {
+      return 1;
+    }
   }
 
   clean_up();
