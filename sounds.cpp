@@ -2,6 +2,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
 #include <string>
 
 const int SCREEN_WIDTH = 640;
@@ -10,13 +11,18 @@ const int SCREEN_BPP = 32;
 
 SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *up = NULL;
-SDL_Surface *down= NULL;
-SDL_Surface *left= NULL;
-SDL_Surface *right= NULL;
+SDL_Surface *message = NULL;
+
 SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
+
+Mix_Music *music = NULL;
+
+Mix_Chunk *scratch = NULL;
+Mix_Chunk *high= NULL;
+Mix_Chunk *med= NULL;
+Mix_Chunk *low= NULL;
 
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
 {
