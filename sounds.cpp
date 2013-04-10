@@ -178,51 +178,119 @@ int main(int argc, char* args[])
   //Load the files
   if(load_files() == false)
   {
+    std::cout << "1";
     return 1;
   }
 
   apply_surface(0, 0, background, screen);
-  up = TTF_RenderText_Solid(font, "Up", textColor);
-  down= TTF_RenderText_Solid(font, "Down", textColor);
-  left= TTF_RenderText_Solid(font, "Left", textColor);
-  right= TTF_RenderText_Solid(font, "Right", textColor);
+  message = TTF_RenderText_Solid(font, "1, 2, 3, or 4 to play a sound effect", textColor);
+
+  if(message == NULL)
+  {
+    return 1;
+  }
+
+  apply_surface((SCREEN_WIDTH - message->w) / 2, 100, message, screen);
+
+  SDL_FreeSurface(message);
+
+  message = TTF_RenderText_Solid(font, "Press 9 to play or pause the music", textColor);
+  if(message == NULL)
+  {
+    return 1;
+  }
+
+  apply_surface((SCREEN_WIDTH - message->w) / 2, 200, message, screen);
+  SDL_FreeSurface(message);
+  message = TTF_RenderText_Solid(font, "Press 0 to stop the music", textColor);
+
+  if(message == NULL)
+  {
+    return 1;
+  }
+
+  apply_surface((SCREEN_WIDTH - message->w) / 2, 300, message, screen);
+  SDL_FreeSurface(message);
+
+
+  if(SDL_Flip(screen) == -1)
+    {
+      return 1;
+    }
 
   //While user hasn't quit
   while(quit == false)
   {
     while(SDL_PollEvent(&event))
     {
+      if(event.type == SDL_KEYDOWN)
+      {
+        if(event.key.keysym.sym == SDLK_1)
+        {
+          if(Mix_PlayChannel(-1, scratch, 0) == -1)
+          {
+            return 1;
+          }
+        }
+
+        else if(event.key.keysym.sym == SDLK_2)
+        {
+          if(Mix_PlayChannel(-1, high, 0) == -1)
+          {
+            return 1;
+          }
+        }
+
+        else if(event.key.keysym.sym == SDLK_3)
+        {
+          if(Mix_PlayChannel(-1, med, 0) == -1)
+          {
+            return 1;
+          }
+        }
+
+        else if(event.key.keysym.sym== SDLK_4)
+        {
+          if(Mix_PlayChannel(-1, low, 0) == -1)
+          {
+            return 1;
+          }
+        }
+
+        else if(event.key.keysym.sym == SDLK_9)
+        {
+          if(Mix_PlayingMusic() == 0)
+          {
+            if(Mix_PlayMusic(music, -1) == -1)
+            {
+              return 1;
+            }
+          }
+
+
+        else
+        {
+          if(Mix_PausedMusic() == 1)
+          {
+            Mix_ResumeMusic();
+          }
+
+          else
+          {
+            Mix_PauseMusic();
+          }
+        }
+      }
+      else if (event.key.keysym.sym == SDLK_0)
+          {
+            Mix_HaltMusic();
+          }
+      }
+
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
-    }
-
-    Uint8 *keystates = SDL_GetKeyState(NULL);
-
-    if(keystates[SDLK_UP])
-    {
-      apply_surface((SCREEN_WIDTH - up->w) / 2, (SCREEN_HEIGHT / 2 - up->h) / 2, up, screen);
-    }
-
-    if(keystates[SDLK_DOWN])
-    {
-      apply_surface((SCREEN_WIDTH - down->w) / 2, (SCREEN_HEIGHT / 2 - down->h) / 2 + (SCREEN_HEIGHT / 2), down, screen);
-    }
-
-    if(keystates[SDLK_LEFT])
-    {
-      apply_surface((SCREEN_WIDTH / 2 - left->w) / 2, (SCREEN_HEIGHT / 2 - left->h) / 2, left, screen);
-    }
-
-    if(keystates[SDLK_RIGHT])
-    {
-      apply_surface((SCREEN_WIDTH / 2 - right->w) / 2 + (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2 - right->h) / 2, right, screen);
-    }
-
-    if(SDL_Flip(screen) == -1)
-    {
-      return 1;
     }
   }
 
