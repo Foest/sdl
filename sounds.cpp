@@ -95,7 +95,12 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Key States!!", NULL);
+  if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+  {
+    return false;
+  }
+
+  SDL_WM_SetCaption("SOUNDS!!", NULL);
 
   return true;
 }
@@ -106,7 +111,7 @@ bool load_files()
   background = load_image("background.png");
 
   //Open the font
-  font = TTF_OpenFont("lazy.ttf", 28);
+  font = TTF_OpenFont("lazy.ttf", 30);
 
   //If there was an error loading the images
   if(background == NULL)
@@ -118,6 +123,21 @@ bool load_files()
   {
     return false;
   }
+  music = Mix_LoadMUS("beat.wav");
+  if(music == NULL)
+  {
+    return false;
+  }
+
+  scratch = Mix_LoadWAV("scratch.wav");
+  high = Mix_LoadWAV("high.wav");
+  med = Mix_LoadWAV("med.wav");
+  low = Mix_LoadWAV("low.wav");
+
+  if((scratch == NULL) || (high == NULL) || (med == NULL) || (low == NULL))
+  {
+    return false;
+  }
 
   return true;
 }
@@ -126,10 +146,15 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
-  SDL_FreeSurface(up);
-  SDL_FreeSurface(down);
-  SDL_FreeSurface(left);
-  SDL_FreeSurface(right);
+
+  Mix_FreeChunk(scratch);
+  Mix_FreeChunk(high);
+  Mix_FreeChunk(med);
+  Mix_FreeChunk(low);
+
+  Mix_FreeMusic(music);
+
+  Mix_CloseAudio();
 
   TTF_CloseFont(font);
 
