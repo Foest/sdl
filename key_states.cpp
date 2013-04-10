@@ -31,12 +31,6 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, 
   SDL_BlitSurface(source, clip, destination, &offset);
 }
 
-
-void Button::show()
-{
-  apply_surface(box.x, box.y, buttonSheet, screen, clip);
-}
-
 SDL_Surface *load_image(std::string filename)
 {
   //Temporary storage for the image that's loaded
@@ -95,7 +89,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("MOUSE EVENTS!!", NULL);
+  SDL_WM_SetCaption("Key States!!", NULL);
 
   return true;
 }
@@ -104,13 +98,12 @@ bool load_files()
 {
   //Load image
   background = load_image("background.png");
-  buttonSheet = load_image("button.png");
 
   //Open the font
   font = TTF_OpenFont("lazy.ttf", 28);
 
   //If there was an error loading the images
-  if(background == NULL || buttonSheet == NULL)
+  if(background == NULL)
   {
     return false;
   }
@@ -127,7 +120,10 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
-  SDL_FreeSurface(buttonSheet);
+  SDL_FreeSurface(up);
+  SDL_FreeSurface(down);
+  SDL_FreeSurface(left);
+  SDL_FreeSurface(right);
 
   TTF_CloseFont(font);
 
