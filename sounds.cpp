@@ -123,7 +123,9 @@ bool load_files()
   {
     return false;
   }
+
   music = Mix_LoadMUS("beat.wav");
+
   if(music == NULL)
   {
     return false;
@@ -131,7 +133,7 @@ bool load_files()
 
   scratch = Mix_LoadWAV("scratch.wav");
   high = Mix_LoadWAV("high.wav");
-  med = Mix_LoadWAV("med.wav");
+  med = Mix_LoadWAV("medium.wav");
   low = Mix_LoadWAV("low.wav");
 
   if((scratch == NULL) || (high == NULL) || (med == NULL) || (low == NULL))
