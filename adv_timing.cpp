@@ -176,7 +176,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("TIMING!!", NULL);
+  SDL_WM_SetCaption("MOAR TIMING!!", NULL);
 
   return true;
 }
@@ -207,12 +207,12 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
+  SDL_FreeSurface(startStop);
+  SDL_FreeSurface(pauseMessage);
 
   TTF_CloseFont(font);
 
   TTF_Quit();
-
-  //Quit SDL
   SDL_Quit();
 }
 
