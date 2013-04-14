@@ -235,9 +235,13 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  Timer myTimer;
+
   startStop = TTF_RenderText_Solid(font, "Press S to start or stop the timer", textColor);
+  pauseMessage = TTF_RenderText_Solid(font, "Press P to pause or unpause the timer", textColor);
   start = SDL_GetTicks();
 
+  myTimer.start();
 
   //While user hasn't quit
   while(quit == false)
@@ -248,15 +252,24 @@ int main(int argc, char* args[])
       {
         if(event.key.keysym.sym == SDLK_s)
         {
-          if(running == true)
+          if(myTimer.is_started() == true)
           {
-            running = false;
-            start = 0;
+            myTimer.stop();
           }
           else
           {
-            running = true;
-            start = SDL_GetTicks();
+            myTimer.start();
+          }
+        }
+        if(event.key.keysym.sym == SDLK_p)
+        {
+          if(myTimer.is_paused() == true)
+          {
+            myTimer.unpause();
+          }
+          else
+          {
+            myTimer.pause();
           }
         }
       }
@@ -267,17 +280,16 @@ int main(int argc, char* args[])
     }
       apply_surface(0, 0, background, screen);
       apply_surface((SCREEN_WIDTH - startStop->w) / 2, 200, startStop, screen);
-      if(running == true)
-      {
+      apply_surface((SCREEN_WIDTH - pauseMessage->w) / 2, 300, pauseMessage, screen);
+
         std::stringstream time;
-        time << "Timer: " << SDL_GetTicks() - start;
+        time << "Timer: " << myTimer.get_ticks() / 1000.f;
 
         seconds = TTF_RenderText_Solid(font, time.str().c_str(), textColor);
 
         apply_surface((SCREEN_WIDTH - seconds->w) / 2, 50, seconds, screen);
 
         SDL_FreeSurface(seconds);
-      }
 
       if(SDL_Flip(screen) == -1)
       {
