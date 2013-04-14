@@ -13,6 +13,7 @@ SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
 SDL_Surface *seconds = NULL;
 SDL_Surface *startStop= NULL;
+SDL_Surface *pauseMessage= NULL;
 
 SDL_Event event;
 TTF_Font *font = NULL;
