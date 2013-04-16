@@ -175,7 +175,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("MOAR TIMING!!", NULL);
+  SDL_WM_SetCaption("FRAME RATE TESTING", NULL);
 
   return true;
 }
