@@ -12,9 +12,6 @@ const int FRAMES_PER_SECOND = 20;
 
 SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *seconds = NULL;
-SDL_Surface *startStop= NULL;
-SDL_Surface *pauseMessage= NULL;
 SDL_Surface *message= NULL;
 
 SDL_Event event;
@@ -209,8 +206,7 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
-  SDL_FreeSurface(startStop);
-  SDL_FreeSurface(pauseMessage);
+  SDL_FreeSurface(message);
 
   TTF_CloseFont(font);
 
@@ -223,8 +219,6 @@ void clean_up()
 int main(int argc, char* args[])
 {
   bool quit = false;
-  Uint32 start = 0;
-  bool running = true;
   int frame = 0;
   bool cap = true;
   Timer fps;
@@ -242,10 +236,7 @@ int main(int argc, char* args[])
 
   Timer myTimer;
 
-  startStop = TTF_RenderText_Solid(font, "Press S to start or stop the timer", textColor);
-  pauseMessage = TTF_RenderText_Solid(font, "Press P to pause or unpause the timer", textColor);
   message = TTF_RenderText_Solid(font, "Testing Frame Rate", textColor);
-  start = SDL_GetTicks();
 
   myTimer.start();
 
