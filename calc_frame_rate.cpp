@@ -12,7 +12,6 @@ const int FRAMES_PER_SECOND = 20;
 
 SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *message= NULL;
 
 SDL_Event event;
 TTF_Font *font = NULL;
@@ -206,7 +205,6 @@ void clean_up()
 {
   //Free the images
   SDL_FreeSurface(background);
-  SDL_FreeSurface(message);
 
   TTF_CloseFont(font);
 
@@ -234,33 +232,20 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Timer myTimer;
-
-  message = TTF_RenderText_Solid(font, "Testing Frame Rate", textColor);
-
-  myTimer.start();
+  update.start();
+  fps.start();
 
   //While user hasn't quit
   while(quit == false)
   {
-    fps.start();
-
     while(SDL_PollEvent(&event))
     {
-      if(event.type == SDL_KEYDOWN)
-      {
-        if(event.key.keysym.sym == SDLK_RETURN)
-        {
-          cap = (!cap);
-        }
-      }
-      else if(event.type == SDL_QUIT)
+      if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
       apply_surface(0, 0, background, screen);
-      apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT + message->h * 2) / FRAMES_PER_SECOND) * (frame % FRAMES_PER_SECOND) - message->h, message, screen);
 
       if(SDL_Flip(screen) == -1)
       {
@@ -269,10 +254,14 @@ int main(int argc, char* args[])
 
       frame++;
 
-      if((cap == true) && (fps.get_ticks() < 1000 / FRAMES_PER_SECOND))
+      if(update.get_ticks() > 1000)
       {
-        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
+        std::stringstream caption;
+        caption << "Average Frames Per Second: " << frame / (fps.get_ticks() / 1000.f);
+        SDL_WM_SetCaption(caption.str().c_str(), NULL);
+        update.start();
       }
+
   }
 
   clean_up();
