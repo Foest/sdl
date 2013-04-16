@@ -217,9 +217,10 @@ void clean_up()
 int main(int argc, char* args[])
 {
   bool quit = false;
-  int frame = 0;
   bool cap = true;
+  int frame = 0;
   Timer fps;
+  Timer update;
 
   if(init() == false)
   {
