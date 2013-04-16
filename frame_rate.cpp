@@ -243,31 +243,15 @@ int main(int argc, char* args[])
   //While user hasn't quit
   while(quit == false)
   {
+    fps.start();
+
     while(SDL_PollEvent(&event))
     {
       if(event.type == SDL_KEYDOWN)
       {
-        if(event.key.keysym.sym == SDLK_s)
+        if(event.key.keysym.sym == SDLK_RETURN)
         {
-          if(myTimer.is_started() == true)
-          {
-            myTimer.stop();
-          }
-          else
-          {
-            myTimer.start();
-          }
-        }
-        if(event.key.keysym.sym == SDLK_p)
-        {
-          if(myTimer.is_paused() == true)
-          {
-            myTimer.unpause();
-          }
-          else
-          {
-            myTimer.pause();
-          }
+          cap = (!cap);
         }
       }
       else if(event.type == SDL_QUIT)
@@ -276,21 +260,18 @@ int main(int argc, char* args[])
       }
     }
       apply_surface(0, 0, background, screen);
-      apply_surface((SCREEN_WIDTH - startStop->w) / 2, 200, startStop, screen);
-      apply_surface((SCREEN_WIDTH - pauseMessage->w) / 2, 300, pauseMessage, screen);
-
-        std::stringstream time;
-        time << "Timer: " << myTimer.get_ticks() / 1000.f;
-
-        seconds = TTF_RenderText_Solid(font, time.str().c_str(), textColor);
-
-        apply_surface((SCREEN_WIDTH - seconds->w) / 2, 50, seconds, screen);
-
-        SDL_FreeSurface(seconds);
+      apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT + message->h * 2) / FRAMES_PER_SECOND) * (frame % FRAMES_PER_SECOND) - message->h, message, screen);
 
       if(SDL_Flip(screen) == -1)
       {
         return 1;
+      }
+
+      frame++;
+
+      if((cap == true) && (fps.get_ticks() < 1000 / FRAMES_PER_SECOND))
+      {
+        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
       }
   }
 
