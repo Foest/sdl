@@ -9,8 +9,10 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
+const int DOT_HEIGHT = 48;
+const int DOT_WIDTH = 48;
 
-SDL_Surface *background = NULL;
+SDL_Surface *dot = NULL;
 SDL_Surface *screen = NULL;
 
 SDL_Event event;
