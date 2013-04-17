@@ -19,69 +19,114 @@ SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
 
-class Dot
-{
-  private:
-    int x, y;
-    int xVel, yVel;
-  public:
-    Dot();
-    void handle_input();
-    void move();
-    void show();
-};
 
-Dot::Dot()
+void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
 {
-  x = 0;
-  y = 0;
+  //Make a temporary rectangle to hold the offsets
+  SDL_Rect offset;
 
-  xVel = 0;
-  yVel = 0;
+  //Give the offsets to the rectangle
+  offset.x = x;
+  offset.y = y;
+
+  //Blit the surface
+  SDL_BlitSurface(source, clip, destination, &offset);
 }
 
-void Dot::handle_input()
+SDL_Surface *load_image(std::string filename)
 {
-  if(event.type == SDL_KEYDOWN)
+  //Temporary storage for the image that's loaded
+  SDL_Surface *loadedImage = NULL;
+
+  //Optimized image that will be used
+  SDL_Surface *optimizedImage = NULL;
+
+  //Load the image
+  loadedImage = IMG_Load(filename.c_str());
+
+  //If nothing went wrong in loading the image
+  if(loadedImage != NULL)
   {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
-      case SDLK_DOWN: yVel += DOT_HEIGHT / 2; break;
-      case SDLK_RIGHT: xVel += DOT_WIDTH / 2; break;
-      case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break;
-    }
+    //Create an optimized image
+    optimizedImage = SDL_DisplayFormat(loadedImage);
+
+    //Free the old image
+    SDL_FreeSurface(loadedImage);
   }
-  else if(event.type == SDL_KEYUP)
+
+  //If the image was optimized without error
+  if(optimizedImage != NULL)
   {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
-      case SDLK_DOWN: yVel -= DOT_HEIGHT / 2; break;
-      case SDLK_RIGHT: xVel -= DOT_WIDTH / 2; break;
-      case SDLK_LEFT: xVel += DOT_WIDTH / 2; break;
-    }
+    //Map the color key
+    Uint32 colorkey = SDL_MapRGB(optimizedImage->format, 0, 0xFF, 0xFF);
+
+    //Set all pixels of color R 0, G 0xFF, B 0xFF to be transparent
+    SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorkey);
   }
+
+
+  //Return the optimized image
+  return optimizedImage;
 }
 
-void Dot::move()
+bool init()
 {
-  x += xVel;
-  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH))
+  //Init SDL subsystems
+  if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
   {
-    x -=xVel;
+    return false;
   }
 
-  y += yVel;
-  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT))
+  //Set up screen
+  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
+
+  //If there was an error setting up the screen
+  if(screen == NULL)
   {
-    y -= yVel;
+    return false;
   }
+
+  if(TTF_Init() == -1)
+  {
+    return false;
+  }
+
+  SDL_WM_SetCaption("FINALLY! MOTION!!", NULL);
+
+  return true;
 }
 
-void Dot::show()
+bool load_files()
 {
-  apply_surface(x, y, dot, screen);
+  //Load image
+  dot = load_image("dot.bmp");
+
+  //Open the font
+  font = TTF_OpenFont("lazy.ttf", 30);
+
+  //If there was an error loading the images
+  if(dot == NULL)
+  {
+    return false;
+  }
+
+  if(font == NULL)
+  {
+    return false;
+  }
+
+  return true;
+}
+
+void clean_up()
+{
+  //Free the images
+  SDL_FreeSurface(dot);
+
+  TTF_CloseFont(font);
+
+  TTF_Quit();
+  SDL_Quit();
 }
 
 class Timer
@@ -170,116 +215,70 @@ bool Timer::is_paused()
   return paused;
 }
 
-void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
+class Dot
 {
-  //Make a temporary rectangle to hold the offsets
-  SDL_Rect offset;
+  private:
+    int x, y;
+    int xVel, yVel;
+  public:
+    Dot();
+    void handle_input();
+    void move();
+    void show();
+};
 
-  //Give the offsets to the rectangle
-  offset.x = x;
-  offset.y = y;
+Dot::Dot()
+{
+  x = 0;
+  y = 0;
 
-  //Blit the surface
-  SDL_BlitSurface(source, clip, destination, &offset);
+  xVel = 0;
+  yVel = 0;
 }
 
-SDL_Surface *load_image(std::string filename)
+void Dot::handle_input()
 {
-  //Temporary storage for the image that's loaded
-  SDL_Surface *loadedImage = NULL;
-
-  //Optimized image that will be used
-  SDL_Surface *optimizedImage = NULL;
-
-  //Load the image
-  loadedImage = IMG_Load(filename.c_str());
-
-  //If nothing went wrong in loading the image
-  if(loadedImage != NULL)
+  if(event.type == SDL_KEYDOWN)
   {
-    //Create an optimized image
-    optimizedImage = SDL_DisplayFormat(loadedImage);
-
-    //Free the old image
-    SDL_FreeSurface(loadedImage);
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel += DOT_HEIGHT / 2; break;
+      case SDLK_RIGHT: xVel += DOT_WIDTH / 2; break;
+      case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break;
+    }
   }
-
-  //If the image was optimized without error
-  if(optimizedImage != NULL)
+  else if(event.type == SDL_KEYUP)
   {
-    //Map the color key
-    Uint32 colorkey = SDL_MapRGB(optimizedImage->format, 0, 0xFF, 0xFF);
-
-    //Set all pixels of color R 0, G 0xFF, B 0xFF to be transparent
-    SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorkey);
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel -= DOT_HEIGHT / 2; break;
+      case SDLK_RIGHT: xVel -= DOT_WIDTH / 2; break;
+      case SDLK_LEFT: xVel += DOT_WIDTH / 2; break;
+    }
   }
-
-
-  //Return the optimized image
-  return optimizedImage;
 }
 
-bool init()
+void Dot::move()
 {
-  //Init SDL subsystems
-  if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
+  x += xVel;
+  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH))
   {
-    return false;
+    x -=xVel;
   }
 
-  //Set up screen
-  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
-
-  //If there was an error setting up the screen
-  if(screen == NULL)
+  y += yVel;
+  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT))
   {
-    return false;
+    y -= yVel;
   }
-
-  if(TTF_Init() == -1)
-  {
-    return false;
-  }
-
-  SDL_WM_SetCaption("FRAME RATE TESTING", NULL);
-
-  return true;
 }
 
-bool load_files()
+void Dot::show()
 {
-  //Load image
-  background = load_image("background.png");
-
-  //Open the font
-  font = TTF_OpenFont("lazy.ttf", 30);
-
-  //If there was an error loading the images
-  if(background == NULL)
-  {
-    return false;
-  }
-
-  if(font == NULL)
-  {
-    return false;
-  }
-
-  return true;
+  apply_surface(x, y, dot, screen);
 }
-
-void clean_up()
-{
-  //Free the images
-  SDL_FreeSurface(background);
-
-  TTF_CloseFont(font);
-
-  TTF_Quit();
-  SDL_Quit();
-}
-
-
 
 int main(int argc, char* args[])
 {
