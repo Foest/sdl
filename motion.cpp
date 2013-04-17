@@ -260,6 +260,7 @@ void Dot::handle_input()
   }
 }
 
+//need to fix, dot can't make it to outer edges
 void Dot::move()
 {
   x += xVel;
