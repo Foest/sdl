@@ -286,7 +286,7 @@ int main(int argc, char* args[])
   bool cap = true;
   int frame = 0;
   Timer fps;
-  Timer update;
+  Dot myDot;
 
   if(init() == false)
   {
@@ -299,20 +299,23 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  update.start();
-  fps.start();
 
   //While user hasn't quit
   while(quit == false)
   {
+    fps.start();
+
     while(SDL_PollEvent(&event))
     {
+      myDot.handle_input();
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
-      apply_surface(0, 0, background, screen);
+      myDot.move();
+      SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+      myDot.show();
 
       if(SDL_Flip(screen) == -1)
       {
@@ -321,14 +324,10 @@ int main(int argc, char* args[])
 
       frame++;
 
-      if(update.get_ticks() > 1000)
+      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
       {
-        std::stringstream caption;
-        caption << "Average Frames Per Second: " << frame / (fps.get_ticks() / 1000.f);
-        SDL_WM_SetCaption(caption.str().c_str(), NULL);
-        update.start();
+        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
       }
-
   }
 
   clean_up();
