@@ -77,6 +77,11 @@ void Dot::move()
   }
 }
 
+void Dot::show()
+{
+  apply_surface(x, y, dot, screen);
+}
+
 class Timer
 {
   private:
