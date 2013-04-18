@@ -327,7 +327,7 @@ int main(int argc, char* args[])
   bool cap = true;
   int frame = 0;
   Timer fps;
-  Dot myDot;
+  Square mySquare;
 
   if(init() == false)
   {
@@ -340,6 +340,10 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  wall.x = 300;
+  wall.y = 40;
+  wall.w = 40;
+  wall.h = 400;
 
   //While user hasn't quit
   while(quit == false)
@@ -348,15 +352,17 @@ int main(int argc, char* args[])
 
     while(SDL_PollEvent(&event))
     {
-      myDot.handle_input();
+      mySquare.handle_input();
+
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
-      myDot.move();
+      mySquare.move();
       SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-      myDot.show();
+      SDL_FillRect(screen, &wall, SDL_MapRGB(screen->format, 0x77, 0x77, 0x77));
+      mySquare.show();
 
       if(SDL_Flip(screen) == -1)
       {
