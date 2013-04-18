@@ -9,8 +9,8 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
-const int DOT_HEIGHT = 48;
-const int DOT_WIDTH = 48;
+const int DOT_HEIGHT = 20;
+const int DOT_WIDTH = 20;
 
 SDL_Surface *dot = NULL;
 SDL_Surface *screen = NULL;
@@ -260,19 +260,28 @@ void Dot::handle_input()
   }
 }
 
-//need to fix, dot can't make it to outer edges
 void Dot::move()
 {
   x += xVel;
-  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH))
+  if(x < 0)
   {
-    x -=xVel;
+    x = 0;
+  }
+
+  if(x + DOT_WIDTH > SCREEN_WIDTH)
+  {
+    x = SCREEN_WIDTH - DOT_WIDTH;
   }
 
   y += yVel;
-  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT))
+  if(y < 0)
   {
-    y -= yVel;
+    y = 0;
+  }
+
+  if(y + DOT_HEIGHT > SCREEN_HEIGHT)
+  {
+    y = SCREEN_HEIGHT - DOT_HEIGHT;
   }
 }
 
