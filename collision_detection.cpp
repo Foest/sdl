@@ -92,7 +92,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("FINALLY! MOTION!!", NULL);
+  SDL_WM_SetCaption("Collision Detection", NULL);
 
   return true;
 }
@@ -100,13 +100,13 @@ bool init()
 bool load_files()
 {
   //Load image
-  dot = load_image("dot.bmp");
+  square = load_image("square.bmp");
 
   //Open the font
   font = TTF_OpenFont("lazy.ttf", 30);
 
   //If there was an error loading the images
-  if(dot == NULL)
+  if(square == NULL)
   {
     return false;
   }
@@ -122,7 +122,7 @@ bool load_files()
 void clean_up()
 {
   //Free the images
-  SDL_FreeSurface(dot);
+  SDL_FreeSurface(square);
 
   TTF_CloseFont(font);
 
