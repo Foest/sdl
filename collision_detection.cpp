@@ -9,12 +9,13 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
-const int DOT_HEIGHT = 20;
-const int DOT_WIDTH = 20;
+const int SQUARE_HEIGHT = 20;
+const int SQUARE_WIDTH = 20;
 
-SDL_Surface *dot = NULL;
+SDL_Surface *square = NULL;
 SDL_Surface *screen = NULL;
 
+SDL_Rect wall;
 SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
