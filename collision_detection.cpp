@@ -130,6 +130,111 @@ void clean_up()
   SDL_Quit();
 }
 
+bool check_collision(SDL_Rect A, SDL_Rect B)
+{
+  int leftA, leftB;
+  int rightA, rightB;
+  int topA, topB;
+  int bottomA, bottomB;
+
+  leftA = A.x;
+  rightA = A.x + A.w;
+  topA = A.y;
+  bottomA = A.y + A.h;
+
+  leftB = B.x;
+  rightB = B.x + B.w;
+  topB = B.y;
+  bottomB = B.y + B.h;
+
+  if(bottomA <= topB)
+  {
+    return false;
+  }
+  if(topA >= bottomB)
+  {
+    return false;
+  }
+  if(rightA <= leftB)
+  {
+    return false;
+  }
+  if(leftA >= rightB)
+  {
+    return false;
+  }
+  return true;
+}
+
+class Square
+{
+  private:
+    SDL_Rect box;
+    int xVel, yVel;
+  public:
+    Square();
+    void handle_input();
+    void move();
+    void show();
+};
+
+Square::Square()
+{
+  box.x = 0;
+  box.y = 0;
+
+  box.w = SQUARE_WIDTH;
+  box.h = SQUARE_HEIGHT;
+
+  xVel = 0;
+  yVel = 0;
+}
+
+void Square::move()
+{
+  box.x += xVel;
+
+  if((box.x < 0) || (box.x + SQUARE_WIDTH > SCREEN_WIDTH) || (check_collision(box, wall)))
+  {
+    box.x -= xVel;
+  }
+
+  box.y += yVel;
+  if((box.y < 0) || (box.y + SQUARE_HEIGHT > SCREEN_HEIGHT) || (check_collision(box, wall)))
+  {
+    box.y -= yVel;
+  }
+}
+
+void Square::handle_input()
+{
+  if(event.type == SDL_KEYDOWN)
+  {
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel -= SQUARE_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel += SQUARE_HEIGHT / 2; break;
+      case SDLK_LEFT: xVel -= SQUARE_WIDTH / 2; break;
+      case SDLK_RIGHT: xVel += SQUARE_WIDTH / 2; break;
+    }
+  }
+  else if(event.type == SDL_KEYUP)
+  {
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel += SQUARE_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel -= SQUARE_HEIGHT / 2; break;
+      case SDLK_LEFT: xVel += SQUARE_WIDTH / 2; break;
+      case SDLK_RIGHT: xVel -= SQUARE_WIDTH / 2; break;
+    }
+  }
+}
+
+void Square::show()
+{
+  apply_surface(box.x, box.y, square, screen);
+}
+
 class Timer
 {
   private:
