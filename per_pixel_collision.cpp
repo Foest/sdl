@@ -131,40 +131,34 @@ void clean_up()
   SDL_Quit();
 }
 
-bool check_collision(SDL_Rect A, SDL_Rect B)
+bool check_collision(std::vector<SDL_Rect> &A, std::vector<SDL_Rect> &B)
 {
   int leftA, leftB;
   int rightA, rightB;
   int topA, topB;
   int bottomA, bottomB;
 
-  leftA = A.x;
-  rightA = A.x + A.w;
-  topA = A.y;
-  bottomA = A.y + A.h;
+  for(int Abox = 0; Abox < A.size(); Abox++)
+  {
+    leftA = A[Abox].x;
+    rightA = A[Abox].x + A[Abox].w;
+    topA = A[Abox].y;
+    bottomA = A[Abox].y + A[Abox].h;
 
-  leftB = B.x;
-  rightB = B.x + B.w;
-  topB = B.y;
-  bottomB = B.y + B.h;
+    for(int Bbox = 0; Bbox < B.size(); Bbox++)
+    {
+      leftB = B[Bbox].x;
+      rightB = B[Bbox].x + B[Bbox].w;
+      topB = B[Bbox].y;
+      bottomB = B[Bbox].y + B[Bbox].h;
 
-  if(bottomA <= topB)
-  {
-    return false;
+      if(((bottomA <= topB) || (topA >= bottomB) || (rightA <= leftB) || (leftA > = rightB)) == false)
+      {
+        return true;
+      }
+    }
   }
-  if(topA >= bottomB)
-  {
-    return false;
-  }
-  if(rightA <= leftB)
-  {
-    return false;
-  }
-  if(leftA >= rightB)
-  {
-    return false;
-  }
-  return true;
+  return false;
 }
 
 class Square
