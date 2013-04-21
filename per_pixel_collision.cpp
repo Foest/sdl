@@ -316,6 +316,93 @@ bool Timer::is_paused()
   return paused;
 }
 
+class Dot
+{
+  private:
+    int x, y;
+    std::vector<SDL_Rect> box;
+    int xVel, yVel;
+    void shift_boxes()
+
+  public:
+      Dot(int X, int Y);
+      void handle_input();
+      void move(std::vector<SDL_Rect> &rects);
+      void show();
+      std::vector<SDL_Rect> &get_rects();
+};
+
+Dot::Dot(int X, int Y)
+{
+  x = X;
+  y = Y;
+  xVel = 0;
+  yVel = 0;
+  box.resize(11);
+
+  box[0].w = 6;
+  box[0].h = 1;
+  box[1].w = 10;
+  box[1].h = 1;
+  box[2].w = 14;
+  box[2].h = 1;
+  box[3].w = 16;
+  box[3].h = 2;
+  box[4].w = 18;
+  box[4].h = 2;
+  box[5].w = 20;
+  box[5].h = 6;
+  box[6].w = 18;
+  box[6].h = 2;
+  box[7].w = 16;
+  box[7].h = 2;
+  box[8].w = 14;
+  box[8].h = 1;
+  box[9].w = 10;
+  box[9].h = 1;
+  box[10].w = 6;
+  box[10].h = 1;
+
+  shift_boxes();
+}
+
+void Dot::shift_boxes()
+{
+  int r = 0;
+
+  for(int set = 0; set < box.size(); set++)
+  {
+    box[set].x = x + (DOT_WIDTH - box[set].w) / 2;
+    box[set].y = y + r;
+    r += box[set].h;
+  }
+}
+
+void Dot::handle_input()
+{
+  if(event.type == SDL_KEYDOWN)
+  {
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel -= 1; break;
+      case SDLK_DOWN: yVel += 1; break;
+      case SDLK_LEFT: xVel -= 1; break;
+      case SDLK_RIGHT: xVel += 1; break;
+    }
+  }
+  else if(event.type == SDL_KEYUP)
+  {
+    switch(event.key.keysym.sym)
+    {
+      case SDLK_UP: yVel += 1; break;
+      case SDLK_DOWN: yVel -= 1; break;
+      case SDLK_LEFT: xVel += 1; break;
+      case SDLK_RIGHT: xVel -= 1; break;
+    }
+  }
+}
+
+
 int main(int argc, char* args[])
 {
   bool quit = false;
