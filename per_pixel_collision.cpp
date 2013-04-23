@@ -381,11 +381,6 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  wall.x = 300;
-  wall.y = 40;
-  wall.w = 40;
-  wall.h = 400;
-
   //While user hasn't quit
   while(quit == false)
   {
@@ -393,24 +388,22 @@ int main(int argc, char* args[])
 
     while(SDL_PollEvent(&event))
     {
-      mySquare.handle_input();
+      myDot.handle_input();
 
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
-      mySquare.move();
+      myDot.move(otherDot.get_rects());
       SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-      SDL_FillRect(screen, &wall, SDL_MapRGB(screen->format, 0x77, 0x77, 0x77));
-      mySquare.show();
+      otherDot.show();
+      myDot.show();
 
       if(SDL_Flip(screen) == -1)
       {
         return 1;
       }
-
-      frame++;
 
       if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
       {
