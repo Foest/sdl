@@ -151,82 +151,13 @@ bool check_collision(std::vector<SDL_Rect> &A, std::vector<SDL_Rect> &B)
       topB = B[Bbox].y;
       bottomB = B[Bbox].y + B[Bbox].h;
 
-      if(((bottomA <= topB) || (topA >= bottomB) || (rightA <= leftB) || (leftA > = rightB)) == false)
+      if(((bottomA <= topB) || (topA >= bottomB) || (rightA <= leftB) || (leftA >= rightB)) == false)
       {
         return true;
       }
     }
   }
   return false;
-}
-
-class Square
-{
-  private:
-    SDL_Rect box;
-    int xVel, yVel;
-  public:
-    Square();
-    void handle_input();
-    void move();
-    void show();
-};
-
-Square::Square()
-{
-  box.x = 0;
-  box.y = 0;
-
-  box.w = SQUARE_WIDTH;
-  box.h = SQUARE_HEIGHT;
-
-  xVel = 0;
-  yVel = 0;
-}
-
-void Square::move()
-{
-  box.x += xVel;
-
-  if((box.x < 0) || (box.x + SQUARE_WIDTH > SCREEN_WIDTH) || (check_collision(box, wall)))
-  {
-    box.x -= xVel;
-  }
-
-  box.y += yVel;
-  if((box.y < 0) || (box.y + SQUARE_HEIGHT > SCREEN_HEIGHT) || (check_collision(box, wall)))
-  {
-    box.y -= yVel;
-  }
-}
-
-void Square::handle_input()
-{
-  if(event.type == SDL_KEYDOWN)
-  {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel -= SQUARE_HEIGHT / 2; break;
-      case SDLK_DOWN: yVel += SQUARE_HEIGHT / 2; break;
-      case SDLK_LEFT: xVel -= SQUARE_WIDTH / 2; break;
-      case SDLK_RIGHT: xVel += SQUARE_WIDTH / 2; break;
-    }
-  }
-  else if(event.type == SDL_KEYUP)
-  {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel += SQUARE_HEIGHT / 2; break;
-      case SDLK_DOWN: yVel -= SQUARE_HEIGHT / 2; break;
-      case SDLK_LEFT: xVel += SQUARE_WIDTH / 2; break;
-      case SDLK_RIGHT: xVel -= SQUARE_WIDTH / 2; break;
-    }
-  }
-}
-
-void Square::show()
-{
-  apply_surface(box.x, box.y, square, screen);
 }
 
 class Timer
