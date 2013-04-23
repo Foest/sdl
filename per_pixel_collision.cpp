@@ -252,7 +252,7 @@ class Dot
     int x, y;
     std::vector<SDL_Rect> box;
     int xVel, yVel;
-    void shift_boxes()
+    void shift_boxes();
 
   public:
       Dot(int X, int Y);
@@ -332,14 +332,43 @@ void Dot::handle_input()
   }
 }
 
+void Dot::move(std::vector<SDL_Rect> &rects)
+{
+  x += xVel;
+  shift_boxes();
+
+  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH) || (check_collision(box, rects)))
+  {
+    x -= xVel;
+    shift_boxes();
+  }
+
+  y += yVel;
+  shift_boxes();
+
+  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT) || (check_collision(box, rects)))
+  {
+    y -= yVel;
+    shift_boxes();
+  }
+}
+
+void Dot::show()
+{
+  apply_surface(x, y, dot, screen);
+}
+
+std::vector<SDL_Rect> &Dot::get_rects()
+{
+  return box;
+}
 
 int main(int argc, char* args[])
 {
   bool quit = false;
   bool cap = true;
-  int frame = 0;
   Timer fps;
-  Square mySquare;
+  Dot myDot(0, 0), otherDot(20, 20);
 
   if(init() == false)
   {
