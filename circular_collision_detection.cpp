@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -160,6 +161,12 @@ bool check_collision(std::vector<SDL_Rect> &A, std::vector<SDL_Rect> &B)
   return false;
 }
 
+struct Circle
+{
+  int x, y;
+  int r;
+}
+
 class Timer
 {
   private:
@@ -249,17 +256,14 @@ bool Timer::is_paused()
 class Dot
 {
   private:
-    int x, y;
-    std::vector<SDL_Rect> box;
+    Circle c;
     int xVel, yVel;
-    void shift_boxes();
 
   public:
-      Dot(int X, int Y);
+      Dot();
       void handle_input();
-      void move(std::vector<SDL_Rect> &rects);
+      void move(std::vector<SDL_Rect> &rects, Circle &circle);
       void show();
-      std::vector<SDL_Rect> &get_rects();
 };
 
 Dot::Dot(int X, int Y)
