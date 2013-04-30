@@ -345,7 +345,18 @@ int main(int argc, char* args[])
   bool quit = false;
   bool cap = true;
   Timer fps;
-  Dot myDot(0, 0), otherDot(20, 20);
+  Dot myDot;
+  std::vector<SDL_Rect> box(1);
+  Circle otherDot;
+
+  box[0].x = 60;
+  box[0].y = 60;
+  box[0].w = 40;
+  box[0].h = 40;
+
+  otherDot.x = 30;
+  otherDot.y = 30;
+  otherDot.r = DOT_WIDTH / 2;
 
   if(init() == false)
   {
@@ -372,9 +383,10 @@ int main(int argc, char* args[])
         quit = true;
       }
     }
-      myDot.move(otherDot.get_rects());
+      myDot.move(box, otherDot);
       SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-      otherDot.show();
+      SDL_FillRect(screen, &box[0], SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+      apply_surface(otherDot.x - otherDot.r, otherDot.y - otherDot.r, dot, screen);
       myDot.show();
 
       if(SDL_Flip(screen) == -1)
