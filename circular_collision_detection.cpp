@@ -146,17 +146,44 @@ bool check_collision(Circle &A, Circle &B)
   return false;
 }
 
-double distance(int x1, int y1, int x2, int y2)
+bool check_collision(Circle &A, std::vector<SDL_Rect> &B)
 {
-  return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2))
-}
+  int cX, cY;
 
+  for(int Bbox = 0; Bbox < B.size(); Bbox++)
+  {
+    if(A.x < B[Bbox].x)
+    {
+      cX = B[Bbox].x;
+    }
+    else if( A.x > B[Bbox].x + B[Bbox].w)
+    {
+      cX = B[Bbox].x + B[Bbox].w;
+    }
+    else
+    {
+      cX = A.x;
+    }
 
+    if(A.y < B[Bbox].y)
+    {
+      cY = B[Bbox].y;
+    }
+    else if( A.y > B[Bbox].y + B[Bbox].h)
+    {
+      cY = B[Bbox].y + B[Bbox].h;
+    }
+    else
+    {
+      cY = A.y;
+    }
 
-struct Circle
-{
-  int x, y;
-  int r;
+    if(distance(A.x, A.y, cX, cY) < A.r)
+    {
+      return true;
+    }
+  }
+  return false;
 }
 
 class Timer
