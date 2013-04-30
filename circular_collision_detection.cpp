@@ -319,35 +319,25 @@ void Dot::handle_input()
   }
 }
 
-void Dot::move(std::vector<SDL_Rect> &rects)
+void Dot::move(std::vector<SDL_Rect> &rects, Circle &circle)
 {
-  x += xVel;
-  shift_boxes();
-
-  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH) || (check_collision(box, rects)))
+  c.x += xVel;
+  if((c.x - DOT_WIDTH / 2 < 0 ) || (c.x + DOT_WIDTH / 2 > SCREEN_WIDTH) || (check_collision(c, rects)) || (check_collision(c, circle)))
   {
-    x -= xVel;
-    shift_boxes();
+    c.x -= xVel;
   }
 
-  y += yVel;
-  shift_boxes();
+  c.y += yVel;
 
-  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT) || (check_collision(box, rects)))
+  if( ( c.y - DOT_WIDTH / 2 < 0 ) || ( c.y + DOT_WIDTH / 2 > SCREEN_HEIGHT ) || ( check_collision( c, rects ) ) || ( check_collision( c, circle ) ) )
   {
-    y -= yVel;
-    shift_boxes();
+    c.y -= yVel;
   }
 }
 
 void Dot::show()
 {
-  apply_surface(x, y, dot, screen);
-}
-
-std::vector<SDL_Rect> &Dot::get_rects()
-{
-  return box;
+  apply_surface(c.x - c.r, c.y - c.r, dot, screen);
 }
 
 int main(int argc, char* args[])
