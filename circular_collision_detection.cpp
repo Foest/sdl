@@ -103,7 +103,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Per Pixel Collision Detection", NULL);
+  SDL_WM_SetCaption("Circular Collision Detection", NULL);
 
   return true;
 }
