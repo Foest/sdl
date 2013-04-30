@@ -11,7 +11,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
-const int DOT_HEIGHT = 20;
 const int DOT_WIDTH = 20;
 
 SDL_Surface *dot = NULL;
@@ -21,6 +20,17 @@ SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
 
+
+struct Circle
+{
+  int x, y;
+  int r;
+};
+
+double distance(int x1, int y1, int x2, int y2)
+{
+  return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+}
 
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
 {
