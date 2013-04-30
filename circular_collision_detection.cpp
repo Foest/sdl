@@ -127,32 +127,11 @@ void clean_up()
   SDL_Quit();
 }
 
-bool check_collision(std::vector<SDL_Rect> &A, std::vector<SDL_Rect> &B)
+bool check_collision(Circle &A, Circle &B)
 {
-  int leftA, leftB;
-  int rightA, rightB;
-  int topA, topB;
-  int bottomA, bottomB;
-
-  for(int Abox = 0; Abox < A.size(); Abox++)
+  if(distance(A.x, A.y, B.x, B.y) < (A.r + B.r))
   {
-    leftA = A[Abox].x;
-    rightA = A[Abox].x + A[Abox].w;
-    topA = A[Abox].y;
-    bottomA = A[Abox].y + A[Abox].h;
-
-    for(int Bbox = 0; Bbox < B.size(); Bbox++)
-    {
-      leftB = B[Bbox].x;
-      rightB = B[Bbox].x + B[Bbox].w;
-      topB = B[Bbox].y;
-      bottomB = B[Bbox].y + B[Bbox].h;
-
-      if(((bottomA <= topB) || (topA >= bottomB) || (rightA <= leftB) || (leftA >= rightB)) == false)
-      {
-        return true;
-      }
-    }
+    return true;
   }
   return false;
 }
