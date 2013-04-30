@@ -285,51 +285,15 @@ class Dot
       void show();
 };
 
-Dot::Dot(int X, int Y)
+Dot::Dot()
 {
-  x = X;
-  y = Y;
+  c.x = DOT_WIDTH / 2;
+  c.y = DOT_WIDTH / 2;
+  c.r = DOT_WIDTH / 2;
   xVel = 0;
   yVel = 0;
-  box.resize(11);
-
-  box[0].w = 6;
-  box[0].h = 1;
-  box[1].w = 10;
-  box[1].h = 1;
-  box[2].w = 14;
-  box[2].h = 1;
-  box[3].w = 16;
-  box[3].h = 2;
-  box[4].w = 18;
-  box[4].h = 2;
-  box[5].w = 20;
-  box[5].h = 6;
-  box[6].w = 18;
-  box[6].h = 2;
-  box[7].w = 16;
-  box[7].h = 2;
-  box[8].w = 14;
-  box[8].h = 1;
-  box[9].w = 10;
-  box[9].h = 1;
-  box[10].w = 6;
-  box[10].h = 1;
-
-  shift_boxes();
 }
 
-void Dot::shift_boxes()
-{
-  int r = 0;
-
-  for(int set = 0; set < box.size(); set++)
-  {
-    box[set].x = x + (DOT_WIDTH - box[set].w) / 2;
-    box[set].y = y + r;
-    r += box[set].h;
-  }
-}
 
 void Dot::handle_input()
 {
