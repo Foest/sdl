@@ -340,7 +340,7 @@ void Dot::move(std::vector<SDL_Rect> &rects, Circle &circle)
 
   c.y += yVel;
 
-  if( ( c.y - DOT_WIDTH / 2 < 0 ) || ( c.y + DOT_WIDTH / 2 > SCREEN_HEIGHT ) || ( check_collision( c, rects ) ) || ( check_collision( c, circle ) ) )
+  if(( c.y - DOT_WIDTH / 2 < 0 ) || (c.y + DOT_WIDTH / 2 > SCREEN_HEIGHT) || (check_collision(c, rects)) || (check_collision(c, circle)))
   {
     c.y -= yVel;
   }
