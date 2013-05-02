@@ -13,6 +13,17 @@ const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const int DOT_WIDTH = 20;
 
+//Prototypes
+struct Circle;
+bool init();
+double distance(int, int, int, int);
+void apply_surface(int, int, SDL_Surface, SDL_Surface, SDL_Rect);
+SDL_Surface *load_image(std::string);
+bool load_files();
+//bool check_collision(Circle, Circle);
+//bool check_collision(Circle, std::vector<SDL_Rect>);
+void clean_up();
+
 SDL_Surface *dot = NULL;
 SDL_Surface *screen = NULL;
 
