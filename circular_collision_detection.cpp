@@ -21,6 +21,16 @@ SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
 
+//Prototypes
+struct Circle;
+bool init();
+double distance(int x1, int y1, int x2, int y2);
+void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
+SDL_Surface *load_image(std::string filename);
+bool load_files();
+bool check_collision(Circle &A, Circle &B);
+bool check_collision(Circle &A, std::vector<SDL_Rect> &B);
+void clean_up();
 
 //Structs/Classes
 struct Circle
@@ -29,12 +39,110 @@ struct Circle
   int r;
 };
 
+class Timer
+{
+  private:
+    int startTicks;
+    int pausedTicks;
+
+    bool paused;
+    bool started;
+
+  public:
+    Timer();
+    void start();
+    void stop();
+    void pause();
+    void unpause();
+    int get_ticks();
+    bool is_started();
+    bool is_paused();
+};
+
+class Dot
+{
+  private:
+    Circle c;
+    int xVel, yVel;
+
+  public:
+      Dot();
+      void handle_input();
+      void move(std::vector<SDL_Rect> &rects, Circle &circle);
+      void show();
+};
+
+//Functions
+int main(int argc, char* args[])
+{
+  bool quit = false;
+  bool cap = true;
+  Timer fps;
+  Dot myDot;
+  std::vector<SDL_Rect> box(1);
+  Circle otherDot;
+
+  box[0].x = 60;
+  box[0].y = 60;
+  box[0].w = 40;
+  box[0].h = 40;
+
+  otherDot.x = 30;
+  otherDot.y = 30;
+  otherDot.r = DOT_WIDTH / 2;
+
+  if(init() == false)
+  {
+    return 1;
+  }
+
+  //Load the files
+  if(load_files() == false)
+  {
+    return 1;
+  }
+
+  //While user hasn't quit
+  while(quit == false)
+  {
+    fps.start();
+
+    while(SDL_PollEvent(&event))
+    {
+      myDot.handle_input();
+
+      if(event.type == SDL_QUIT)
+      {
+        quit = true;
+      }
+    }
+      myDot.move(box, otherDot);
+      SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+      SDL_FillRect(screen, &box[0], SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+      apply_surface(otherDot.x - otherDot.r, otherDot.y - otherDot.r, dot, screen);
+      myDot.show();
+
+      if(SDL_Flip(screen) == -1)
+      {
+        return 1;
+      }
+
+      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
+      {
+        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
+      }
+  }
+
+  clean_up();
+  return 0;
+}
+
 double distance(int x1, int y1, int x2, int y2)
 {
   return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
-void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL)
+void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip)
 {
   //Make a temporary rectangle to hold the offsets
   SDL_Rect offset;
@@ -188,26 +296,6 @@ bool check_collision(Circle &A, std::vector<SDL_Rect> &B)
   return false;
 }
 
-class Timer
-{
-  private:
-    int startTicks;
-    int pausedTicks;
-
-    bool paused;
-    bool started;
-
-  public:
-    Timer();
-    void start();
-    void stop();
-    void pause();
-    void unpause();
-    int get_ticks();
-    bool is_started();
-    bool is_paused();
-};
-
 Timer::Timer()
 {
   startTicks = 0;
@@ -274,19 +362,6 @@ bool Timer::is_paused()
   return paused;
 }
 
-class Dot
-{
-  private:
-    Circle c;
-    int xVel, yVel;
-
-  public:
-      Dot();
-      void handle_input();
-      void move(std::vector<SDL_Rect> &rects, Circle &circle);
-      void show();
-};
-
 Dot::Dot()
 {
   c.x = DOT_WIDTH / 2;
@@ -340,68 +415,4 @@ void Dot::move(std::vector<SDL_Rect> &rects, Circle &circle)
 void Dot::show()
 {
   apply_surface(c.x - c.r, c.y - c.r, dot, screen);
-}
-
-int main(int argc, char* args[])
-{
-  bool quit = false;
-  bool cap = true;
-  Timer fps;
-  Dot myDot;
-  std::vector<SDL_Rect> box(1);
-  Circle otherDot;
-
-  box[0].x = 60;
-  box[0].y = 60;
-  box[0].w = 40;
-  box[0].h = 40;
-
-  otherDot.x = 30;
-  otherDot.y = 30;
-  otherDot.r = DOT_WIDTH / 2;
-
-  if(init() == false)
-  {
-    return 1;
-  }
-
-  //Load the files
-  if(load_files() == false)
-  {
-    return 1;
-  }
-
-  //While user hasn't quit
-  while(quit == false)
-  {
-    fps.start();
-
-    while(SDL_PollEvent(&event))
-    {
-      myDot.handle_input();
-
-      if(event.type == SDL_QUIT)
-      {
-        quit = true;
-      }
-    }
-      myDot.move(box, otherDot);
-      SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-      SDL_FillRect(screen, &box[0], SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
-      apply_surface(otherDot.x - otherDot.r, otherDot.y - otherDot.r, dot, screen);
-      myDot.show();
-
-      if(SDL_Flip(screen) == -1)
-      {
-        return 1;
-      }
-
-      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-      {
-        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-      }
-  }
-
-  clean_up();
-  return 0;
 }
