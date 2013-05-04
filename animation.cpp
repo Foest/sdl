@@ -39,6 +39,10 @@ struct Circle
   int r;
 };
 
+class Foo
+{
+};
+
 class Timer
 {
   private:
