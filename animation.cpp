@@ -41,6 +41,11 @@ struct Circle
 
 class Foo
 {
+  private:
+    int offset;
+    int velocity;
+    int frame;
+    int status;
 };
 
 class Timer
