@@ -51,6 +51,12 @@ class Foo
     int velocity;
     int frame;
     int status;
+
+  public:
+    Foo();
+    void handle_events();
+    void move();
+    void show();
 };
 
 class Timer
