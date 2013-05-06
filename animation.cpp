@@ -13,6 +13,8 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const int DOT_WIDTH = 20;
+const int FOO_WIDTH = 20;
+const int FOO_HEIGHT = 60;
 
 //Globals
 SDL_Surface *dot = NULL;
@@ -20,6 +22,8 @@ SDL_Surface *screen = NULL;
 SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
+SDL_Rect clipsLeft[4];
+SDL_Rect clipsRight[4];
 
 //Prototypes
 struct Circle;
@@ -31,6 +35,7 @@ bool load_files();
 bool check_collision(Circle &A, Circle &B);
 bool check_collision(Circle &A, std::vector<SDL_Rect> &B);
 void clean_up();
+void set_clips();
 
 //Structs/Classes
 struct Circle
