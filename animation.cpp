@@ -309,6 +309,42 @@ bool check_collision(Circle &A, std::vector<SDL_Rect> &B)
   return false;
 }
 
+void set_clips()
+{
+  clipsRight[ 0 ].x = 0;
+  clipsRight[ 0 ].y = 0;
+  clipsRight[ 0 ].w = FOO_WIDTH;
+  clipsRight[ 0 ].h = FOO_HEIGHT;
+  clipsRight[ 1 ].x = FOO_WIDTH;
+  clipsRight[ 1 ].y = 0;
+  clipsRight[ 1 ].w = FOO_WIDTH;
+  clipsRight[ 1 ].h = FOO_HEIGHT;
+  clipsRight[ 2 ].x = FOO_WIDTH * 2;
+  clipsRight[ 2 ].y = 0;
+  clipsRight[ 2 ].w = FOO_WIDTH;
+  clipsRight[ 2 ].h = FOO_HEIGHT;
+  clipsRight[ 3 ].x = FOO_WIDTH * 3;
+  clipsRight[ 3 ].y = 0;
+  clipsRight[ 3 ].w = FOO_WIDTH;
+  clipsRight[ 3 ].h = FOO_HEIGHT;
+  clipsLeft[ 0 ].x = 0;
+  clipsLeft[ 0 ].y = FOO_HEIGHT;
+  clipsLeft[ 0 ].w = FOO_WIDTH;
+  clipsLeft[ 0 ].h = FOO_HEIGHT;
+  clipsLeft[ 1 ].x = FOO_WIDTH;
+  clipsLeft[ 1 ].y = FOO_HEIGHT;
+  clipsLeft[ 1 ].w = FOO_WIDTH;
+  clipsLeft[ 1 ].h = FOO_HEIGHT;
+  clipsLeft[ 2 ].x = FOO_WIDTH * 2;
+  clipsLeft[ 2 ].y = FOO_HEIGHT;
+  clipsLeft[ 2 ].w = FOO_WIDTH;
+  clipsLeft[ 2 ].h = FOO_HEIGHT;
+  clipsLeft[ 3 ].x = FOO_WIDTH * 3;
+  clipsLeft[ 3 ].y = FOO_HEIGHT;
+  clipsLeft[ 3 ].w = FOO_WIDTH;
+  clipsLeft[ 3 ].h = FOO_HEIGHT;
+}
+
 Timer::Timer()
 {
   startTicks = 0;
