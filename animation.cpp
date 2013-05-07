@@ -463,7 +463,7 @@ void Dot::move(std::vector<SDL_Rect> &rects, Circle &circle)
 
 void Dot::show()
 {
-  apply_surface(c.x - c.r, c.y - c.r, dot, screen);
+//  apply_surface(c.x - c.r, c.y - c.r, dot, screen);
 }
 
 void set_clips() {
