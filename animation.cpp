@@ -50,7 +50,7 @@ struct Circle
 class Foo
 {
   private:
-    int offset;
+    int offSet;
     int velocity;
     int frame;
     int status;
