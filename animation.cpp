@@ -11,13 +11,16 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
-const int FRAMES_PER_SECOND = 20;
+const int FRAMES_PER_SECOND = 10;
 const int DOT_WIDTH = 20;
-const int FOO_WIDTH = 20;
-const int FOO_HEIGHT = 60;
+const int FOO_WIDTH = 64;
+const int FOO_HEIGHT = 205;
+const int FOO_RIGHT = 0;
+const int FOO_LEFT = 1;
+
 
 //Globals
-SDL_Surface *dot = NULL;
+SDL_Surface *foo = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
 TTF_Font *font = NULL;
