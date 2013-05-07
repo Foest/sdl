@@ -226,18 +226,18 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Circular Collision Detection", NULL);
+  SDL_WM_SetCaption("Animation", NULL);
 
   return true;
 }
 
 bool load_files()
 {
-  dot = load_image("dot.bmp");
+  foo = load_image("foo.png");
 
   font = TTF_OpenFont("lazy.ttf", 30);
 
-  if(dot == NULL)
+  if(foo == NULL)
   {
     return false;
   }
@@ -252,7 +252,7 @@ bool load_files()
 
 void clean_up()
 {
-  SDL_FreeSurface(dot);
+  SDL_FreeSurface(foo);
 
   TTF_CloseFont(font);
 
