@@ -20,13 +20,16 @@ const int FOO_LEFT = 1;
 
 
 //Globals
-SDL_Surface *foo = NULL;
+SDL_Surface *dot = NULL;
+SDL_Surface *foo= NULL;
 SDL_Surface *screen = NULL;
+SDL_Surface *background = NULL;
 SDL_Event event;
 TTF_Font *font = NULL;
 SDL_Color textColor = {0, 0, 0};
 SDL_Rect clipsLeft[4];
 SDL_Rect clipsRight[4];
+SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 //Prototypes
 struct Circle;
