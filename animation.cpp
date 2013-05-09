@@ -12,7 +12,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 10;
-const int DOT_WIDTH = 20;
 const int FOO_WIDTH = 64;
 const int FOO_HEIGHT = 205;
 const int FOO_RIGHT = 0;
@@ -23,20 +22,15 @@ const int FOO_LEFT = 1;
 SDL_Surface *foo = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
-TTF_Font *font = NULL;
-SDL_Color textColor = {0, 0, 0};
 SDL_Rect clipsLeft[4];
 SDL_Rect clipsRight[4];
 
 //Prototypes
 struct Circle;
 bool init();
-double distance(int x1, int y1, int x2, int y2);
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
 bool load_files();
-bool check_collision(Circle &A, Circle &B);
-bool check_collision(Circle &A, std::vector<SDL_Rect> &B);
 void clean_up();
 void set_clips();
 
@@ -82,24 +76,10 @@ class Timer
     bool is_paused();
 };
 
-class Dot
-{
-  private:
-    Circle c;
-    int xVel, yVel;
-
-  public:
-      Dot();
-      void handle_input();
-      void move(std::vector<SDL_Rect> &rects, Circle &circle);
-      void show();
-};
-
 //Functions
 int main(int argc, char* args[])
 {
   bool quit = false;
-  bool cap = true;
 
   if(init() == false)
   {
@@ -112,8 +92,8 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Timer fps;
   set_clips();
+  Timer fps;
   Foo walk;
 
   //While user hasn't quit
@@ -148,11 +128,6 @@ int main(int argc, char* args[])
 
   clean_up();
   return 0;
-}
-
-double distance(int x1, int y1, int x2, int y2)
-{
-  return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip)
@@ -235,14 +210,7 @@ bool load_files()
 {
   foo = load_image("foo.png");
 
-  font = TTF_OpenFont("lazy.ttf", 30);
-
   if(foo == NULL)
-  {
-    return false;
-  }
-
-  if(font == NULL)
   {
     return false;
   }
@@ -254,59 +222,8 @@ void clean_up()
 {
   SDL_FreeSurface(foo);
 
-  TTF_CloseFont(font);
-
   TTF_Quit();
   SDL_Quit();
-}
-
-bool check_collision(Circle &A, Circle &B)
-{
-  if(distance(A.x, A.y, B.x, B.y) < (A.r + B.r))
-  {
-    return true;
-  }
-  return false;
-}
-
-bool check_collision(Circle &A, std::vector<SDL_Rect> &B)
-{
-  int cX, cY;
-
-  for(int Bbox = 0; Bbox < B.size(); Bbox++)
-  {
-    if(A.x < B[Bbox].x)
-    {
-      cX = B[Bbox].x;
-    }
-    else if( A.x > B[Bbox].x + B[Bbox].w)
-    {
-      cX = B[Bbox].x + B[Bbox].w;
-    }
-    else
-    {
-      cX = A.x;
-    }
-
-    if(A.y < B[Bbox].y)
-    {
-      cY = B[Bbox].y;
-    }
-    else if( A.y > B[Bbox].y + B[Bbox].h)
-    {
-      cY = B[Bbox].y + B[Bbox].h;
-    }
-    else
-    {
-      cY = A.y;
-    }
-
-    if(distance(A.x, A.y, cX, cY) < A.r)
-    {
-      return true;
-    }
-  }
-  return false;
 }
 
 void set_clips()
@@ -411,61 +328,6 @@ bool Timer::is_paused()
   return paused;
 }
 
-Dot::Dot()
-{
-  c.x = DOT_WIDTH / 2;
-  c.y = DOT_WIDTH / 2;
-  c.r = DOT_WIDTH / 2;
-  xVel = 0;
-  yVel = 0;
-}
-
-
-void Dot::handle_input()
-{
-  if(event.type == SDL_KEYDOWN)
-  {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel -= 1; break;
-      case SDLK_DOWN: yVel += 1; break;
-      case SDLK_LEFT: xVel -= 1; break;
-      case SDLK_RIGHT: xVel += 1; break;
-    }
-  }
-  else if(event.type == SDL_KEYUP)
-  {
-    switch(event.key.keysym.sym)
-    {
-      case SDLK_UP: yVel += 1; break;
-      case SDLK_DOWN: yVel -= 1; break;
-      case SDLK_LEFT: xVel += 1; break;
-      case SDLK_RIGHT: xVel -= 1; break;
-    }
-  }
-}
-
-void Dot::move(std::vector<SDL_Rect> &rects, Circle &circle)
-{
-  c.x += xVel;
-  if((c.x - DOT_WIDTH / 2 < 0 ) || (c.x + DOT_WIDTH / 2 > SCREEN_WIDTH) || (check_collision(c, rects)) || (check_collision(c, circle)))
-  {
-    c.x -= xVel;
-  }
-
-  c.y += yVel;
-
-  if(( c.y - DOT_WIDTH / 2 < 0 ) || (c.y + DOT_WIDTH / 2 > SCREEN_HEIGHT) || (check_collision(c, rects)) || (check_collision(c, circle)))
-  {
-    c.y -= yVel;
-  }
-}
-
-void Dot::show()
-{
-//  apply_surface(c.x - c.r, c.y - c.r, dot, screen);
-}
-
 Foo::Foo()
 {
   offSet = 0;
@@ -484,6 +346,7 @@ void Foo::handle_events()
       case SDLK_LEFT: velocity -= FOO_WIDTH / 4; break;
     }
   }
+
   else if(event.type = SDL_KEYUP)
   {
     switch(event.key.keysym.sym)
