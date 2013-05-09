@@ -346,8 +346,7 @@ void Foo::handle_events()
       case SDLK_LEFT: velocity -= FOO_WIDTH / 4; break;
     }
   }
-
-  else if(event.type = SDL_KEYUP)
+  else if(event.type == SDL_KEYUP)
   {
     switch(event.key.keysym.sym)
     {
