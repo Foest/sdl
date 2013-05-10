@@ -11,19 +11,23 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
-const int FRAMES_PER_SECOND = 10;
+const int FRAMES_PER_SECOND = 20;
 const int FOO_WIDTH = 64;
 const int FOO_HEIGHT = 205;
 const int FOO_RIGHT = 0;
 const int FOO_LEFT = 1;
-
+const int LEVEL_WIDTH = 1280;
+const int LEVEL_HEIGHT = 960;
 
 //Globals
+SDL_Surface *dot = NULL;
+SDL_Surface *background = NULL;
 SDL_Surface *foo = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
 SDL_Rect clipsLeft[4];
 SDL_Rect clipsRight[4];
+SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 //Prototypes
 struct Circle;
@@ -110,20 +114,19 @@ int main(int argc, char* args[])
         quit = true;
       }
     }
-      walk.move();
+    walk.move();
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    walk.show();
 
-      SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-      walk.show();
+    if(SDL_Flip(screen) == -1)
+    {
+      return 1;
+    }
 
-      if(SDL_Flip(screen) == -1)
-      {
-        return 1;
-      }
-
-      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-      {
-        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-      }
+    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
+    {
+      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
+    }
   }
 
   clean_up();
@@ -174,8 +177,6 @@ SDL_Surface *load_image(std::string filename)
     SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorkey);
   }
 
-
-  //Return the optimized image
   return optimizedImage;
 }
 
@@ -302,10 +303,10 @@ int Timer::get_ticks()
 void Timer::pause()
 {
   if((started == true) && (paused == false))
-    {
-      paused = true;
-      pausedTicks = SDL_GetTicks() - startTicks;
-    }
+  {
+    paused = true;
+    pausedTicks = SDL_GetTicks() - startTicks;
+  }
 }
 
 void Timer::unpause()
