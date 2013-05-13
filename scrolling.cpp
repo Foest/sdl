@@ -60,6 +60,18 @@ class Foo
     void show();
 };
 
+class Dot
+{
+  private:
+    int x, y;
+    int xVel, yVel;
+  public:
+    Dot();
+    void handle_input();
+    void move();
+    void show();
+    void set_camera();
+};
 class Timer
 {
   private:
