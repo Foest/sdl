@@ -18,6 +18,8 @@ const int FOO_RIGHT = 0;
 const int FOO_LEFT = 1;
 const int LEVEL_WIDTH = 1280;
 const int LEVEL_HEIGHT = 960;
+const int DOT_WIDTH = 20;
+const int DOT_HEIGHT = 20;
 
 //Globals
 SDL_Surface *dot = NULL;
@@ -408,5 +410,22 @@ void Foo::show()
   else if(status = FOO_LEFT)
   {
     apply_surface(offSet, SCREEN_HEIGHT - FOO_HEIGHT, foo, screen, &clipsLeft[frame]);
+  }
+}
+
+void Dot::move()
+{
+  x += xVel;
+
+  if((x < 0) || (x + DOT_WIDTH > LEVEL_WIDTH))
+  {
+    x -= xVel;
+  }
+
+  y += yVel;
+
+  if((y < 0) || (y + DOT_HEIGHT > LEVEL_HEIGHT))
+  {
+    y -= yVel;
   }
 }
