@@ -453,3 +453,7 @@ void Dot::set_camera()
   }
 }
 
+void Dot::show()
+{
+  apply_surface(x - camera.x, y - camera.y, dot, screen);
+}
