@@ -112,7 +112,7 @@ int main(int argc, char* args[])
 
   set_clips();
   Timer fps;
-  Foo walk;
+  Dot myDot;
 
   //While user hasn't quit
   while(quit == false)
@@ -121,16 +121,18 @@ int main(int argc, char* args[])
 
     while(SDL_PollEvent(&event))
     {
-      walk.handle_events();
+      myDot.handle_input();
 
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
-    walk.move();
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
-    walk.show();
+
+    myDot.move();
+    myDot.set_camera();
+    apply_surface(0, 0, background, screen, &camera);
+    myDot.show();
 
     if(SDL_Flip(screen) == -1)
     {
