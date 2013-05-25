@@ -415,6 +415,14 @@ void Foo::show()
   }
 }
 
+Dot::Dot()
+{
+  x = 0;
+  y = 0;
+  xVel = 0;
+  yVel = 0;
+}
+
 void Dot::move()
 {
   x += xVel;
@@ -459,3 +467,9 @@ void Dot::show()
 {
   apply_surface(x - camera.x, y - camera.y, dot, screen);
 }
+
+//TODO: implement handle_input()
+void Dot::handle_input()
+{
+}
+
