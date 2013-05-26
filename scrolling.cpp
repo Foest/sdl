@@ -218,7 +218,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Animation", NULL);
+  SDL_WM_SetCaption("Scrolling", NULL);
 
   return true;
 }
@@ -226,6 +226,7 @@ bool init()
 bool load_files()
 {
   foo = load_image("foo.png");
+  background = load_image("bg.png");
 
   if(foo == NULL)
   {
@@ -238,6 +239,7 @@ bool load_files()
 void clean_up()
 {
   SDL_FreeSurface(foo);
+  SDL_FreeSurface(background);
 
   TTF_Quit();
   SDL_Quit();
