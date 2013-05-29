@@ -225,10 +225,15 @@ bool init()
 
 bool load_files()
 {
-  foo = load_image("foo.png");
+  dot = load_image("dot.bmp");
   background = load_image("bg.png");
 
-  if(foo == NULL)
+  if(dot == NULL)
+  {
+    return false;
+  }
+
+  if(background == NULL)
   {
     return false;
   }
