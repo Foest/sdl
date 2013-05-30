@@ -243,7 +243,7 @@ bool load_files()
 
 void clean_up()
 {
-  SDL_FreeSurface(foo);
+  SDL_FreeSurface(dot);
   SDL_FreeSurface(background);
 
   TTF_Quit();
