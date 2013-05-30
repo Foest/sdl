@@ -360,22 +360,26 @@ Foo::Foo()
   status = FOO_RIGHT;
 }
 
-void Foo::handle_events()
+void Dot::handle_input()
 {
   if(event.type == SDL_KEYDOWN)
   {
     switch(event.key.keysym.sym)
     {
-      case SDLK_RIGHT: velocity += FOO_WIDTH / 4; break;
-      case SDLK_LEFT: velocity -= FOO_WIDTH / 4; break;
+      case SDLK_RIGHT: xVel += DOT_WIDTH / 2; break;
+      case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break;
+      case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel += DOT_HEIGHT / 2; break;
     }
   }
   else if(event.type == SDL_KEYUP)
   {
     switch(event.key.keysym.sym)
     {
-      case SDLK_RIGHT: velocity -= FOO_WIDTH / 4; break;
-      case SDLK_LEFT: velocity += FOO_WIDTH / 4; break;
+      case SDLK_RIGHT: xVel -= DOT_WIDTH / 2; break;
+      case SDLK_LEFT: xVel += DOT_WIDTH / 2; break;
+      case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
+      case SDLK_DOWN: yVel -= DOT_HEIGHT / 2; break;
     }
   }
 }
