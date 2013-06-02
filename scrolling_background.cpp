@@ -75,6 +75,7 @@ class Timer
 int main(int argc, char* args[])
 {
   bool quit = false;
+  int bgX = 0, bgY = 0;
 
   if(init() == false)
   {
