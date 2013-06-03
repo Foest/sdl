@@ -12,8 +12,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
-const int LEVEL_WIDTH = 1280;
-const int LEVEL_HEIGHT = 960;
 const int DOT_WIDTH = 20;
 const int DOT_HEIGHT = 20;
 
@@ -49,7 +47,6 @@ class Dot
     void handle_input();
     void move();
     void show();
-    void set_camera();
 };
 class Timer
 {
@@ -106,9 +103,16 @@ int main(int argc, char* args[])
       }
     }
 
+    bgX -= 2;
+
+    if(bgX <= -background->w)
+    {
+      bgX = 0;
+    }
+
+    apply_surface(bgX, bgY, background, screen);
+    apply_surface(bgX + background->w, bgY, background, screen);
     myDot.move();
-    myDot.set_camera();
-    apply_surface(0, 0, background, screen, &camera);
     myDot.show();
 
     if(SDL_Flip(screen) == -1)
@@ -329,39 +333,16 @@ void Dot::move()
 {
   x += xVel;
 
-  if((x < 0) || (x + DOT_WIDTH > LEVEL_WIDTH))
+  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH))
   {
     x -= xVel;
   }
 
   y += yVel;
 
-  if((y < 0) || (y + DOT_HEIGHT > LEVEL_HEIGHT))
+  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT))
   {
     y -= yVel;
-  }
-}
-
-void Dot::set_camera()
-{
-  camera.x = (x + DOT_WIDTH / 2) - SCREEN_WIDTH / 2;
-  camera.y = (y + DOT_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-
-  if(camera.x < 0)
-  {
-    camera.x = 0;
-  }
-  if(camera.y < 0)
-  {
-    camera.y = 0;
-  }
-  if(camera.x > LEVEL_WIDTH - camera.w)
-  {
-    camera.x = LEVEL_WIDTH - camera.w;
-  }
-  if(camera.y > LEVEL_HEIGHT - camera.h)
-  {
-    camera.y = LEVEL_HEIGHT - camera.h;
   }
 }
 
