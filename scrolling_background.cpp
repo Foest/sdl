@@ -199,7 +199,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Scrolling", NULL);
+  SDL_WM_SetCaption("Scrolling Background", NULL);
 
   return true;
 }
