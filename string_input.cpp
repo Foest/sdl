@@ -68,6 +68,19 @@ class Timer
     bool is_paused();
 };
 
+class StringInput
+{
+  private:
+    std::string str;
+    SDL_Surface *text;
+
+  public:
+    StringInput();
+    ~StringInput();
+    void handle_input();
+    void show_centered();
+};
+
 //Functions
 int main(int argc, char* args[])
 {
