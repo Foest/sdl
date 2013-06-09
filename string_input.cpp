@@ -363,3 +363,16 @@ void Dot::show()
 {
   apply_surface(x - camera.x, y - camera.y, dot, screen);
 }
+
+StringInput::StringInput()
+{
+  str = "";
+  text = NULL;
+  SDL_EnableUNICODE(SDL_ENABLE);
+}
+
+StringInput::~StringInput()
+{
+  SDL_FreeSurface(text);
+  SDL_EnableUNICODE(SDL_DISABLE);
+}
