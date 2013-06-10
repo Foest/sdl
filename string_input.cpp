@@ -376,3 +376,11 @@ StringInput::~StringInput()
   SDL_FreeSurface(text);
   SDL_EnableUNICODE(SDL_DISABLE);
 }
+
+void StringInput::show_centered()
+{
+  if(text != NULL)
+  {
+    apply_surface((SCREEN_WIDTH - text->w) / 2, (SCREEN_HEIGHT - text->h) / 2, text, screen);
+  }
+}
