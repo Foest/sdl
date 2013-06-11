@@ -384,3 +384,7 @@ void StringInput::show_centered()
     apply_surface((SCREEN_WIDTH - text->w) / 2, (SCREEN_HEIGHT - text->h) / 2, text, screen);
   }
 }
+
+void StringInput::handle_input()
+{
+}
