@@ -387,4 +387,8 @@ void StringInput::show_centered()
 
 void StringInput::handle_input()
 {
+  if(event.type == SDL_KEYDOWN)
+  {
+    std::string temp = str;
+  }
 }
