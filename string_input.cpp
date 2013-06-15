@@ -217,10 +217,10 @@ bool init()
 
 bool load_files()
 {
-  dot = load_image("dot.bmp");
+  font = TTF_OpenFont("lazy.ttf", 42);
   background = load_image("bg.png");
 
-  if(dot == NULL)
+  if(font == NULL)
   {
     return false;
   }
