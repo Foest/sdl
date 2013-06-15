@@ -16,11 +16,13 @@ const int DOT_WIDTH = 20;
 const int DOT_HEIGHT = 20;
 
 //Globals
-SDL_Surface *dot = NULL;
+SDL_Surface *message = NULL;
 SDL_Surface *background = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
 SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+TTF_Font *font = NULL;
+SDL_Color textColor = {0xFF, 0xFF, 0xFF};
 
 //Prototypes
 struct Circle;
