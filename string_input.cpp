@@ -87,7 +87,7 @@ class StringInput
 int main(int argc, char* args[])
 {
   bool quit = false;
-  int bgX = 0, bgY = 0;
+  bool nameEntered = false;
 
   if(init() == false)
   {
@@ -100,44 +100,40 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Timer fps;
-  Dot myDot;
+  StringInput name;
+  message = TTF_RenderText_Solid(font, "New High Score! Enter Name:", textColor);
 
   //While user hasn't quit
   while(quit == false)
   {
-    fps.start();
-
     while(SDL_PollEvent(&event))
     {
-      myDot.handle_input();
+
+      if(nameEntered == false)
+      {
+        name.handle_input();
+
+        if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
+        {
+          nameEntered = true;
+          SDL_FreeSurface(message);
+          message = TTF_RenderText_Solid(font, "Rank: 1st", textColor);
+        }
+      }
 
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
+    apply_surface(0, 0, background, screen);
+    apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
+    name.show_centered();
 
-    bgX -= 2;
-
-    if(bgX <= -background->w)
-    {
-      bgX = 0;
-    }
-
-    apply_surface(bgX, bgY, background, screen);
-    apply_surface(bgX + background->w, bgY, background, screen);
-    myDot.move();
-    myDot.show();
 
     if(SDL_Flip(screen) == -1)
     {
       return 1;
-    }
-
-    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-    {
-      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
     }
   }
 
