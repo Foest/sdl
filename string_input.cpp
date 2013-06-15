@@ -235,8 +235,10 @@ bool load_files()
 
 void clean_up()
 {
-  SDL_FreeSurface(dot);
+  SDL_FreeSurface(message);
   SDL_FreeSurface(background);
+
+  TTF_CloseFont(font);
 
   TTF_Quit();
   SDL_Quit();
