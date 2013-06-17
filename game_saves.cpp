@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <fstream>
 
 //Constants
 const int SCREEN_WIDTH = 640;
