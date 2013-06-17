@@ -50,6 +50,10 @@ class Dot
     void handle_input();
     void move();
     void show();
+    void set_x(int X);
+    void set_y(int Y);
+    int get_x();
+    int get_y();
 };
 class Timer
 {
