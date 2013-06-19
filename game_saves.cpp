@@ -222,17 +222,38 @@ bool init()
 
 bool load_files()
 {
-  font = TTF_OpenFont("lazy.ttf", 42);
-  background = load_image("bg.png");
+  dot = load_image("dot.png");
 
-  if(font == NULL)
+  if(dot == NULL)
   {
     return false;
   }
 
-  if(background == NULL)
+  std::ifstream load("game_save");
+
+  if(load == NULL)
   {
-    return false;
+    int offset;
+    std::string level;
+
+    load >> offset;
+    thisDot.set_x(offset);
+
+    load >> offset;
+    thisDot.set_y(offset);
+
+    if((thisDot.get_x() < 0) || (thisDot.get_x() > SCREEN_WIDTH - DOT_WIDTH))
+    {
+      return false;
+    }
+
+    if((thisDot.get_y < 0) || (thisDot.get_y > SCREEN_HEIGHT - DOT_HEIGHT))
+    {
+      return false;
+    }
+
+
+
   }
 
   return true;
