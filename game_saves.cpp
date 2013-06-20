@@ -252,10 +252,33 @@ bool load_files()
       return false;
     }
 
+    load.ignore();
+    getline(load, level);
 
+    if(load.fail() == true)
+    {
+      return false;
+    }
 
+    if(level == "White Level")
+    {
+      bg = SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF);
+    }
+    else if(level == "Red Level")
+    {
+      bg = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
+    }
+    else if(level == "Green Level")
+    {
+      bg = SDL_MapRGB(screen->format, 0x00, 0xFF, 0xFF);
+    }
+    else if(level == "Blue Level")
+    {
+      bg = SDL_MapRGB(screen->format, 0x00, 0x00, 0xFF);
+    }
+
+    load.close();
   }
-
   return true;
 }
 
