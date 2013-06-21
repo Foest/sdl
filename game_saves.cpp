@@ -92,7 +92,6 @@ class StringInput
 int main(int argc, char* args[])
 {
   bool quit = false;
-  bool nameEntered = false;
 
   if(init() == false)
   {
@@ -105,9 +104,6 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  StringInput name;
-  message = TTF_RenderText_Solid(font, "New High Score! Enter Name:", textColor);
-
   //While user hasn't quit
   while(quit == false)
   {
@@ -116,7 +112,6 @@ int main(int argc, char* args[])
 
       if(nameEntered == false)
       {
-        name.handle_input();
 
         if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
         {
@@ -284,12 +279,37 @@ bool load_files()
 
 void clean_up()
 {
-  SDL_FreeSurface(message);
-  SDL_FreeSurface(background);
+  SDL_FreeSurface(dot);
 
-  TTF_CloseFont(font);
+  std::ofstream save("game_save");
+  save << thisDot.get_x();
+  save << " ";
+  save << thisDot.get_y();
+  save << "\n";
 
-  TTF_Quit();
+  Uint8 r, g, b;
+
+  SDL_GetRGB(bg, screen->format, &r, &g, &b);
+
+  if((r == 0xFF) && (g == 0cFF) && (b == 0xFF))
+  {
+    save << "White Level";
+  }
+  else if(r == 0xFF)
+  {
+    save << "Red Level";
+  }
+  else if(g == 0xFF)
+  {
+    save << "Green Level";
+  }
+  else if(b == 0xFF)
+  {
+    save << "Blue Level";
+  }
+
+  save.close();
+
   SDL_Quit();
 }
 
