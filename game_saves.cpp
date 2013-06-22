@@ -98,8 +98,14 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  Dot myDot;
+
+  Uint32 background = SDL_mapRGP(screen->format, 0xFF, 0xFF, 0xFF);
+
+  Timer fps;
+
   //Load the files
-  if(load_files() == false)
+  if(load_files(myDot, background) == false)
   {
     return 1;
   }
