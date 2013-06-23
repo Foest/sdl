@@ -30,7 +30,7 @@ struct Circle;
 bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
-bool load_files();
+bool load_files(Dot &thisDot, Uint32 &bg);
 void clean_up();
 
 //Structs/Classes
@@ -100,7 +100,7 @@ int main(int argc, char* args[])
 
   Dot myDot;
 
-  Uint32 background = SDL_mapRGP(screen->format, 0xFF, 0xFF, 0xFF);
+  Uint32 background = SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF);
 
   Timer fps;
 
@@ -115,31 +115,35 @@ int main(int argc, char* args[])
   {
     while(SDL_PollEvent(&event))
     {
+      myDot.handle_input();
 
-      if(nameEntered == false)
-      {
-
-        if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
+        if(event.type == SDL_KEYDOWN)
         {
-          nameEntered = true;
-          SDL_FreeSurface(message);
-          message = TTF_RenderText_Solid(font, "Rank: 1st", textColor);
+          switch(event.key.keysym.sym)
+          {
+            case SDLK_1: background = SDL_MapRGB( screen->format, 0xFF, 0xFF, 0xFF ); break;
+            case SDLK_2: background = SDL_MapRGB( screen->format, 0xFF, 0x00, 0x00 ); break;
+            case SDLK_3: background = SDL_MapRGB( screen->format, 0x00, 0xFF, 0x00 ); break;
+            case SDLK_4: background = SDL_MapRGB( screen->format, 0x00, 0x00, 0xFF ); break;
+          }
         }
-      }
 
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
-    apply_surface(0, 0, background, screen);
-    apply_surface((SCREEN_WIDTH - message->w) / 2, ((SCREEN_HEIGHT / 2) - message->h) / 2, message, screen);
-    name.show_centered();
 
+    myDot.move();
 
     if(SDL_Flip(screen) == -1)
     {
       return 1;
+    }
+
+    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
+    {
+      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
     }
   }
 
@@ -221,7 +225,7 @@ bool init()
   return true;
 }
 
-bool load_files()
+bool load_files(Dot &thisDot, Uint32 &bg)
 {
   dot = load_image("dot.png");
 
@@ -297,7 +301,7 @@ void clean_up()
 
   SDL_GetRGB(bg, screen->format, &r, &g, &b);
 
-  if((r == 0xFF) && (g == 0cFF) && (b == 0xFF))
+  if((r == 0xFF) && (g == 0xFF) && (b == 0xFF))
   {
     save << "White Level";
   }
