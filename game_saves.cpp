@@ -150,7 +150,7 @@ int main(int argc, char* args[])
     }
   }
 
-  clean_up();
+  clean_up(myDot, background);
   return 0;
 }
 
@@ -457,6 +457,26 @@ StringInput::~StringInput()
 {
   SDL_FreeSurface(text);
   SDL_EnableUNICODE(SDL_DISABLE);
+}
+
+void Dot::set_x(int X)
+{
+  x = X;
+}
+
+void Dot::set_y(int Y)
+{
+  y = Y;
+}
+
+int Dot::get_x()
+{
+  return x;
+}
+
+int Dot::get_y()
+{
+  return y;
 }
 
 void StringInput::show_centered()
