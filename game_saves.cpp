@@ -110,6 +110,7 @@ int main(int argc, char* args[])
   //Load the files
   if(load_files(myDot, background) == false)
   {
+    std::cout << "1";
     return 1;
   }
 
@@ -252,11 +253,13 @@ bool load_files(Dot &thisDot, Uint32 &bg)
 
     if((thisDot.get_x() < 0) || (thisDot.get_x() > SCREEN_WIDTH - DOT_WIDTH))
     {
+    std::cout << "2";
       return false;
     }
 
     if((thisDot.get_y() < 0) || (thisDot.get_y() > SCREEN_HEIGHT - DOT_HEIGHT))
     {
+    std::cout << "3";
       return false;
     }
 
@@ -265,6 +268,7 @@ bool load_files(Dot &thisDot, Uint32 &bg)
 
     if(load.fail() == true)
     {
+    std::cout << "4";
       return false;
     }
 
