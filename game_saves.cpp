@@ -25,12 +25,6 @@ SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 TTF_Font *font = NULL;
 SDL_Color textColor = {0xFF, 0xFF, 0xFF};
 
-//Prototypes
-struct Circle;
-bool init();
-void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
-SDL_Surface *load_image(std::string filename);
-
 //Structs/Classes
 struct Circle
 {
@@ -86,7 +80,10 @@ class StringInput
     void show_centered();
 };
 
-//TODO
+//Prototypes
+struct Circle;
+bool init();
+void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
 bool load_files(Dot &thisDot, Uint32 &bg);
 void clean_up(Dot &thisDot, Uint32 &bg);
@@ -139,6 +136,8 @@ int main(int argc, char* args[])
     }
 
     myDot.move();
+    SDL_FillRect(screen, &screen->clip_rect, background);
+    myDot.show();
 
     if(SDL_Flip(screen) == -1)
     {
