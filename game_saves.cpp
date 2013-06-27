@@ -224,7 +224,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Scrolling Background", NULL);
+  SDL_WM_SetCaption("Game Saves", NULL);
 
   return true;
 }
