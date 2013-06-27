@@ -240,7 +240,7 @@ bool load_files(Dot &thisDot, Uint32 &bg)
 
   std::ifstream load("game_save");
 
-  if(load == NULL)
+  if(load != NULL)
   {
     int offset;
     std::string level;
