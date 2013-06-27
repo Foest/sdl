@@ -447,7 +447,7 @@ void Dot::move()
 
 void Dot::show()
 {
-//  apply_surface(x - camera.x, y - camera.y, dot, screen);
+  apply_surface(x, y, dot, screen);
 }
 
 StringInput::StringInput()
