@@ -114,6 +114,7 @@ int main(int argc, char* args[])
   //While user hasn't quit
   while(quit == false)
   {
+    fps.start();
     while(SDL_PollEvent(&event))
     {
       myDot.handle_input();
