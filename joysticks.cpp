@@ -296,38 +296,11 @@ bool load_files(Dot &thisDot, Uint32 &bg)
   return true;
 }
 
-void clean_up(Dot &thisDot, Uint32 &bg)
+void clean_up()
 {
   SDL_FreeSurface(dot);
 
-  std::ofstream save("game_save");
-  save << thisDot.get_x();
-  save << " ";
-  save << thisDot.get_y();
-  save << "\n";
-
-  Uint8 r, g, b;
-
-  SDL_GetRGB(bg, screen->format, &r, &g, &b);
-
-  if((r == 0xFF) && (g == 0xFF) && (b == 0xFF))
-  {
-    save << "White Level";
-  }
-  else if(r == 0xFF)
-  {
-    save << "Red Level";
-  }
-  else if(g == 0xFF)
-  {
-    save << "Green Level";
-  }
-  else if(b == 0xFF)
-  {
-    save << "Blue Level";
-  }
-
-  save.close();
+  SDL_JoystickClose(stick);
 
   SDL_Quit();
 }
