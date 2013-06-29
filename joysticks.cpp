@@ -24,6 +24,7 @@ SDL_Event event;
 SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 TTF_Font *font = NULL;
 SDL_Color textColor = {0xFF, 0xFF, 0xFF};
+SDL_Joystick *stick = NULL;
 
 //Structs/Classes
 struct Circle
