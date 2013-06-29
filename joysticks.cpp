@@ -220,12 +220,13 @@ bool init()
     return false;
   }
 
-  if(TTF_Init() == -1)
+  if(SDL_NumJoysticks() < 1)
   {
     return false;
   }
 
-  SDL_WM_SetCaption("Game Saves", NULL);
+  stick = SDL_JoystickOpen(0);
+  SDL_WM_SetCaption("Joysticks", NULL);
 
   return true;
 }
