@@ -377,8 +377,23 @@ void Dot::handle_input()
   {
     if(event.jaxis.which == 0)
     {
+      if((event.jaxis.value > - 8000) && (event.jaxis.value < 8000))
+      {
+        xVel = 0;
+      }
+      else
+      {
+        if(event.jaxis.value < 0)
+        {
+          xVel = -DOT_WIDTH / 2;
+        }
+        else
+        {
+          xVel = DOT_WIDTH / 2;
+        }
     }
   }
+
 }
 
 Dot::Dot()
