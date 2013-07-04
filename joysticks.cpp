@@ -87,7 +87,7 @@ bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
 bool load_files(Dot &thisDot, Uint32 &bg);
-void clean_up(Dot &thisDot, Uint32 &bg);
+void clean_up();
 
 //Functions
 int main(int argc, char* args[])
@@ -152,7 +152,7 @@ int main(int argc, char* args[])
     }
   }
 
-  clean_up(myDot, background);
+  clean_up();
   return 0;
 }
 
