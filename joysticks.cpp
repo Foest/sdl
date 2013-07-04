@@ -377,7 +377,7 @@ void Dot::handle_input()
   {
     if(event.jaxis.which == 0)
     {
-      if(even.jaxis.axis == 0)
+      if(event.jaxis.axis == 0)
       {
         if((event.jaxis.value > - 8000) && (event.jaxis.value < 8000))
         {
