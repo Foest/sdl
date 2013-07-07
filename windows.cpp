@@ -81,6 +81,19 @@ class StringInput
     void show_centered();
 };
 
+class Window
+{
+  private:
+    bool windowed;
+    bool windowOK;
+
+  public:
+    Window();
+    void handle_events();
+    void toggle_fullscreen();
+    bool error();
+};
+
 //Prototypes
 struct Circle;
 bool init();
