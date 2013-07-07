@@ -522,3 +522,22 @@ void StringInput::handle_input()
     }
   }
 }
+
+Window::Window()
+{
+  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE);
+
+  if(screen == NULL)
+  {
+    windowOK = false;
+    return;
+  }
+  else
+  {
+    windowOK = true;
+  }
+
+  SDL_WM_SetCaption("Window Event Test", NULL);
+
+  windowed = true;
+}
