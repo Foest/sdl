@@ -224,23 +224,6 @@ bool init()
     return false;
   }
 
-  //Set up screen
-  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
-
-  //If there was an error setting up the screen
-  if(screen == NULL)
-  {
-    return false;
-  }
-
-  if(SDL_NumJoysticks() < 1)
-  {
-    return false;
-  }
-
-  stick = SDL_JoystickOpen(0);
-  SDL_WM_SetCaption("Joysticks", NULL);
-
   return true;
 }
 
