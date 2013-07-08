@@ -541,3 +541,22 @@ Window::Window()
 
   windowed = true;
 }
+
+void Window::handle_events()
+{
+  if(windowOK == false)
+  {
+    return;
+  }
+
+  if(event.type == SDL_VIDEORESIZE)
+  {
+    screen = SDL_SetVideoMode(event.resize.w, event.resize.h, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE);
+
+    if(screen == NULL)
+    {
+      windowOK = false;
+      return;
+    }
+  }
+}
