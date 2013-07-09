@@ -560,3 +560,31 @@ void Window::handle_events()
     }
   }
 }
+
+void Window::toggle_fullscreen()
+{
+  if(windowed == true)
+  {
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE | SDL_FULLSCREEN);
+
+    if(screen == NULL)
+    {
+      windowOK = false;
+      return;
+    }
+
+    windowed = false;
+  }
+  else if(windowed == false)
+  {
+    screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE );
+
+    if(screen == NULL)
+    {
+      windowOK = false;
+      return;
+    }
+
+    windowed = true;
+  }
+}
