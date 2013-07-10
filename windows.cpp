@@ -559,6 +559,11 @@ void Window::handle_events()
       return;
     }
   }
+  else if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
+  {
+    toggle_fullscreen();
+  }
+  //TODO
 }
 
 void Window::toggle_fullscreen()
