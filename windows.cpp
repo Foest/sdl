@@ -636,3 +636,8 @@ void Window::toggle_fullscreen()
     windowed = true;
   }
 }
+
+bool Window::error()
+{
+  return !windowOK;
+}
