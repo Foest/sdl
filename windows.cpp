@@ -563,7 +563,50 @@ void Window::handle_events()
   {
     toggle_fullscreen();
   }
-  //TODO
+  else if(event.type == SDL_ACTIVEEVENT)
+  {
+    if(event.active.state & SDL_APPACTIVE)
+    {
+      if(event.active.gain == 0)
+      {
+        SDL_WM_SetCaption("Window Event Test: Iconified", NULL);
+      }
+      else
+      {
+        SDL_WM_SetCaption("Window Event Test", NULL);
+      }
+    }
+    else if(event.active.state & SDL_APPINPUTFOCUS)
+    {
+      if(event.active.gain == 0)
+      {
+        SDL_WM_SetCaption("Window Event Test: Keyboard Focus Lost", NULL);
+      }
+      else
+      {
+        SDL_WM_SetCaption("Window Event Test", NULL);
+      }
+    }
+    else if(event.active.state & SDL_APPMOUSEFOCUS)
+    {
+      if(event.active.gain == 0)
+      {
+        SDL_WM_SetCaption("Window Event Test: Mouse Focus Lost", NULL);
+      }
+      else
+      {
+        SDL_WM_SetCaption("Window Event Test", NULL);
+      }
+    }
+  }
+  else if(event.type == SDL_VIDEOEXPOSE)
+  {
+    if(SDL_Flip(screen) == -1)
+    {
+      windowOK = false;
+      return
+    }
+  }
 }
 
 void Window::toggle_fullscreen()
