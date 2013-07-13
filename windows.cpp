@@ -112,16 +112,16 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Dot myDot;
+  WIndow myWindow;
 
-  Uint32 background = SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF);
-
-  Timer fps;
+  if(myWindow.error() == true)
+  {
+    return 1;
+  }
 
   //Load the files
   if(load_files(myDot, background) == false)
   {
-    std::cout << "1";
     return 1;
   }
 
@@ -131,40 +131,32 @@ int main(int argc, char* args[])
     fps.start();
     while(SDL_PollEvent(&event))
     {
-      myDot.handle_input();
+      myWindow.handle_events();
 
-        if(event.type == SDL_KEYDOWN)
+        if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_ESCAPE))
         {
-          switch(event.key.keysym.sym)
-          {
-            case SDLK_1: background = SDL_MapRGB( screen->format, 0xFF, 0xFF, 0xFF ); break;
-            case SDLK_2: background = SDL_MapRGB( screen->format, 0xFF, 0x00, 0x00 ); break;
-            case SDLK_3: background = SDL_MapRGB( screen->format, 0x00, 0xFF, 0x00 ); break;
-            case SDLK_4: background = SDL_MapRGB( screen->format, 0x00, 0x00, 0xFF ); break;
-          }
+          quit == true;
         }
 
-      if(event.type == SDL_QUIT)
-      {
-        quit = true;
-      }
+        if(event.type == SDL_QUIT)
+        {
+          quit = true;
+        }
     }
 
-    myDot.move();
-    SDL_FillRect(screen, &screen->clip_rect, background);
-    myDot.show();
+    if(myWindow.error() == true)
+    {
+      return 1;
+    }
+
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    apply_surface( ( screen->w - testing->w ) / 2, ( screen->h - testing->h ) / 2, testing, screen );
 
     if(SDL_Flip(screen) == -1)
     {
       return 1;
     }
-
-    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-    {
-      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-    }
   }
-
   clean_up();
   return 0;
 }
