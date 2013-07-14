@@ -99,7 +99,7 @@ struct Circle;
 bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
-bool load_files(Dot &thisDot, Uint32 &bg);
+bool load_files();
 void clean_up();
 
 //Functions
@@ -120,7 +120,7 @@ int main(int argc, char* args[])
   }
 
   //Load the files
-  if(load_files(myDot, background) == false)
+  if(load_files() == false)
   {
     return 1;
   }
