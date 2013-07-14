@@ -112,7 +112,7 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  WIndow myWindow;
+  Window myWindow;
 
   if(myWindow.error() == true)
   {
@@ -128,7 +128,6 @@ int main(int argc, char* args[])
   //While user hasn't quit
   while(quit == false)
   {
-    fps.start();
     while(SDL_PollEvent(&event))
     {
       myWindow.handle_events();
