@@ -18,7 +18,7 @@ const int DOT_HEIGHT = 20;
 
 //Globals
 SDL_Surface *dot = NULL;
-SDL_Surface *background = NULL;
+SDL_Surface *testing= NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
 SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
