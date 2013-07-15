@@ -105,6 +105,8 @@ void clean_up();
 //Functions
 int main(int argc, char* args[])
 {
+  int alpha = SDL_ALPHA_OPAQUE;
+  Timer fps;
   bool quit = false;
 
   if(init() == false)
@@ -112,16 +114,9 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Dot myDot;
-
-  Uint32 background = SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF);
-
-  Timer fps;
-
   //Load the files
-  if(load_files(myDot, background) == false)
+  if(load_files() == false)
   {
-    std::cout << "1";
     return 1;
   }
 
