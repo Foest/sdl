@@ -120,34 +120,44 @@ int main(int argc, char* args[])
     return 1;
   }
 
+  Uint8 *keystates = SDL_GetKeyState(NULL);
+
+  //TODO: following needs to be in loop
+  if(keystates[SDLK_UP])
+  {
+    if(alpha < SDL_ALPHA_OPAQUE)
+    {
+      alpha += 5;
+    }
+  }
+
+  if(keystates[SDLK_DOWN])
+  {
+    if(alpha < SDL_ALPHA_OPAQUE)
+    {
+      alpha -= 5;
+    }
+  }
+
+  if(keystates[SDLK_UP])
+  {
+    if(alpha < SDL_ALPHA_OPAQUE)
+    {
+      alpha += 5;
+    }
+  }
+
+  SDL_SetAlpha(front, SDL_SRCALPHA, alpha);
+
+  apply_surface(0, 0, back, screen);
+
+  apply_surface(0, 0, front, screen);
+
+
   //While user hasn't quit
   while(quit == false)
   {
     fps.start();
-    while(SDL_PollEvent(&event))
-    {
-      myDot.handle_input();
-
-        if(event.type == SDL_KEYDOWN)
-        {
-          switch(event.key.keysym.sym)
-          {
-            case SDLK_1: background = SDL_MapRGB( screen->format, 0xFF, 0xFF, 0xFF ); break;
-            case SDLK_2: background = SDL_MapRGB( screen->format, 0xFF, 0x00, 0x00 ); break;
-            case SDLK_3: background = SDL_MapRGB( screen->format, 0x00, 0xFF, 0x00 ); break;
-            case SDLK_4: background = SDL_MapRGB( screen->format, 0x00, 0x00, 0xFF ); break;
-          }
-        }
-
-      if(event.type == SDL_QUIT)
-      {
-        quit = true;
-      }
-    }
-
-    myDot.move();
-    SDL_FillRect(screen, &screen->clip_rect, background);
-    myDot.show();
 
     if(SDL_Flip(screen) == -1)
     {
