@@ -120,54 +120,54 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  Uint8 *keystates = SDL_GetKeyState(NULL);
-
-  //TODO: following needs to be in loop
-  if(keystates[SDLK_UP])
-  {
-    if(alpha < SDL_ALPHA_OPAQUE)
-    {
-      alpha += 5;
-    }
-  }
-
-  if(keystates[SDLK_DOWN])
-  {
-    if(alpha < SDL_ALPHA_OPAQUE)
-    {
-      alpha -= 5;
-    }
-  }
-
-  if(keystates[SDLK_UP])
-  {
-    if(alpha < SDL_ALPHA_OPAQUE)
-    {
-      alpha += 5;
-    }
-  }
-
-  SDL_SetAlpha(front, SDL_SRCALPHA, alpha);
-
-  apply_surface(0, 0, back, screen);
-
-  apply_surface(0, 0, front, screen);
-
-
   //While user hasn't quit
   while(quit == false)
   {
+
     fps.start();
 
-    if(SDL_Flip(screen) == -1)
+    while(SDL_PollEvent(&event))
     {
-      return 1;
+      if(event.type == SDL_QUIT)
+      {
+        quit = true;
+      }
     }
 
-    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
+    Uint8 *keystates = SDL_GetKeyState(NULL);
+
+    //TODO: following needs to be in loop
+    if(keystates[SDLK_UP])
     {
-      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
+      if(alpha < SDL_ALPHA_OPAQUE)
+      {
+        alpha += 5;
+      }
     }
+
+    if(keystates[SDLK_DOWN])
+    {
+      if(alpha < SDL_ALPHA_OPAQUE)
+      {
+        alpha -= 5;
+      }
+    }
+
+      SDL_SetAlpha(front, SDL_SRCALPHA, alpha);
+
+      apply_surface(0, 0, back, screen);
+
+      apply_surface(0, 0, front, screen);
+
+      if(SDL_Flip(screen) == -1)
+      {
+        return 1;
+      }
+
+      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
+      {
+        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
+      }
   }
 
   clean_up();
