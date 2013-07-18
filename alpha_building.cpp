@@ -257,14 +257,14 @@ bool load_files()
   {
     return false;
   }
+
   return true;
 }
 
 void clean_up()
 {
-  SDL_FreeSurface(dot);
-
-  SDL_JoystickClose(stick);
+  SDL_FreeSurface(back);
+  SDL_FreeSurface(front);
 
   SDL_Quit();
 }
