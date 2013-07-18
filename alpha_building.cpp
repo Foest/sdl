@@ -230,6 +230,15 @@ bool init()
     return false;
   }
 
+  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
+
+  if(screen == NULL)
+  {
+    return false;
+  }
+
+  SDL_WM_SetCaption("Alpha Test", NULL);
+
   return true;
 }
 
