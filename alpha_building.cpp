@@ -148,7 +148,7 @@ int main(int argc, char* args[])
 
     if(keystates[SDLK_DOWN])
     {
-      if(alpha < SDL_ALPHA_OPAQUE)
+      if(alpha > SDL_ALPHA_TRANSPARENT)
       {
         alpha -= 5;
       }
