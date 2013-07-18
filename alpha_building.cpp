@@ -17,8 +17,9 @@ const int DOT_WIDTH = 20;
 const int DOT_HEIGHT = 20;
 
 //Globals
+SDL_Surface *front = NULL;
 SDL_Surface *dot = NULL;
-SDL_Surface *background = NULL;
+SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
 SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -99,7 +100,7 @@ struct Circle;
 bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
-bool load_files(Dot &thisDot, Uint32 &bg);
+bool load_files();
 void clean_up();
 
 //Functions
