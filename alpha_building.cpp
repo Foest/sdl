@@ -572,7 +572,7 @@ void Window::handle_events()
     if(SDL_Flip(screen) == -1)
     {
       windowOK = false;
-      return
+      return;
     }
   }
 }
