@@ -242,67 +242,20 @@ bool init()
   return true;
 }
 
-bool load_files(Dot &thisDot, Uint32 &bg)
+bool load_files()
 {
-  dot = load_image("dot.png");
+  back = load_image("fadein.png");
 
-  if(dot == NULL)
+  if(back == NULL)
   {
     return false;
   }
 
-  std::ifstream load("game_save");
+  front = load_image("fadeout.png");
 
-  if(load != NULL)
+  if(front == NULL)
   {
-    int offset;
-    std::string level;
-
-    load >> offset;
-    thisDot.set_x(offset);
-
-    load >> offset;
-    thisDot.set_y(offset);
-
-    if((thisDot.get_x() < 0) || (thisDot.get_x() > SCREEN_WIDTH - DOT_WIDTH))
-    {
-    std::cout << "2";
-      return false;
-    }
-
-    if((thisDot.get_y() < 0) || (thisDot.get_y() > SCREEN_HEIGHT - DOT_HEIGHT))
-    {
-    std::cout << "3";
-      return false;
-    }
-
-    load.ignore();
-    getline(load, level);
-
-    if(load.fail() == true)
-    {
-    std::cout << "4";
-      return false;
-    }
-
-    if(level == "White Level")
-    {
-      bg = SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF);
-    }
-    else if(level == "Red Level")
-    {
-      bg = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
-    }
-    else if(level == "Green Level")
-    {
-      bg = SDL_MapRGB(screen->format, 0x00, 0xFF, 0xFF);
-    }
-    else if(level == "Blue Level")
-    {
-      bg = SDL_MapRGB(screen->format, 0x00, 0x00, 0xFF);
-    }
-
-    load.close();
+    return false;
   }
   return true;
 }
