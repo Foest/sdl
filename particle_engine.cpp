@@ -95,6 +95,20 @@ class Window
     bool error();
 };
 
+class Particle
+{
+  private:
+    int x, y;
+    int frame;
+
+    SDL_Surface *type;
+
+  private:
+    Particle(int X, int Y);
+    void show();
+    bool is_dead();
+};
+
 //Prototypes
 struct Circle;
 bool init();
