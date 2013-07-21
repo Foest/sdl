@@ -39,11 +39,14 @@ class Dot
   private:
     int x, y;
     int xVel, yVel;
+    Particle *particles[TOTAL_PARTICLES];
   public:
     Dot();
+    ~Dot();
     void handle_input();
     void move();
     void show();
+    void show_particles();
     void set_x(int X);
     void set_y(int Y);
     int get_x();
