@@ -254,7 +254,9 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Alpha Test", NULL);
+  SDL_WM_SetCaption("Particle Test", NULL);
+
+  srand(SDL_GetTicks());
 
   return true;
 }
