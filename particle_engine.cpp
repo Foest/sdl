@@ -628,3 +628,18 @@ bool Window::error()
 {
   return !windowOK;
 }
+
+Particle::Particle(int X, int Y)
+{
+  x = X - 5 + (rand() % 25);
+  y = Y - 5 + (rand() % 25);
+
+  frame = rand() % 5;
+
+  switch(rand() % 3)
+  {
+    case 0: type = red; break;
+    case 1: type = green; break;
+    case 2: type = blue; break;
+  }
+}
