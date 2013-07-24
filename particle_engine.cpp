@@ -643,3 +643,15 @@ Particle::Particle(int X, int Y)
     case 2: type = blue; break;
   }
 }
+
+void Particle::show()
+{
+  apply_surface(x, y, type, screen);
+
+  if(frame % 2 == 0)
+  {
+    apply_surface(x, y, shimmer, screen);
+  }
+
+  frame++;
+}
