@@ -655,3 +655,13 @@ void Particle::show()
 
   frame++;
 }
+
+bool Particle::is_dead()
+{
+  if(frame > 10)
+  {
+    return true;
+  }
+
+  return false;
+}
