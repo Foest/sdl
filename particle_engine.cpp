@@ -406,6 +406,11 @@ Dot::Dot()
   y = 0;
   xVel = 0;
   yVel = 0;
+
+  for(int p = 0; p < TOTAL_PARTICLES; p++)
+  {
+    particles[p] = new Particle(x, y);
+  }
 }
 
 void Dot::move()
