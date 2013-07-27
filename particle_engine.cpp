@@ -430,6 +430,14 @@ void Dot::move()
   }
 }
 
+Dot::~Dot()
+{
+  for (int p = 0; p < TOTAL_PARTICLES; p++)
+  {
+    delete particles[p];
+  }
+}
+
 void Dot::show()
 {
   apply_surface(x, y, dot, screen);
