@@ -441,7 +441,10 @@ Dot::~Dot()
 void Dot::show()
 {
   apply_surface(x, y, dot, screen);
+  show_particles();
 }
+
+//TODO: implement show_particles()
 
 StringInput::StringInput()
 {
