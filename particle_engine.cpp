@@ -444,7 +444,22 @@ void Dot::show()
   show_particles();
 }
 
-//TODO: implement show_particles()
+void Dot::show_particles()
+{
+  for(int p = 0; p < TOTAL_PARTICLES; p++)
+  {
+    if(particles[p]->is_dead() == true);
+    {
+      delete particles[p];
+      particles[p] = new Particle(x, y);
+    }
+  }
+
+  for(int p = 0; p < TOTAL_PARTICLES; p++)
+  {
+    particles[p]->show();
+  }
+}
 
 StringInput::StringInput()
 {
