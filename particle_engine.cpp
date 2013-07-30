@@ -7,6 +7,7 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
+#include <cstdlib>
 
 //Constants
 const int SCREEN_WIDTH = 640;
@@ -19,6 +20,10 @@ const int DOT_HEIGHT = 20;
 //Globals
 SDL_Surface *front = NULL;
 SDL_Surface *dot = NULL;
+SDL_Surface *shimmer= NULL;
+SDL_Surface *blue= NULL;
+SDL_Surface *green= NULL;
+SDL_Surface *red= NULL;
 SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
