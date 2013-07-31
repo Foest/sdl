@@ -48,7 +48,7 @@ class Particle
 
     SDL_Surface *type;
 
-  private:
+  public:
     Particle(int X, int Y);
     void show();
     bool is_dead();
