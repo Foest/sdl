@@ -16,6 +16,7 @@ const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const int DOT_WIDTH = 20;
 const int DOT_HEIGHT = 20;
+const int TOTAL_PARTICLES = 20;
 
 //Globals
 SDL_Surface *front = NULL;
@@ -39,12 +40,27 @@ struct Circle
   int r;
 };
 
+class Particle
+{
+  private:
+    int x, y;
+    int frame;
+
+    SDL_Surface *type;
+
+  private:
+    Particle(int X, int Y);
+    void show();
+    bool is_dead();
+};
+
 class Dot
 {
   private:
     int x, y;
     int xVel, yVel;
     Particle *particles[TOTAL_PARTICLES];
+
   public:
     Dot();
     ~Dot();
@@ -101,20 +117,6 @@ class Window
     void handle_events();
     void toggle_fullscreen();
     bool error();
-};
-
-class Particle
-{
-  private:
-    int x, y;
-    int frame;
-
-    SDL_Surface *type;
-
-  private:
-    Particle(int X, int Y);
-    void show();
-    bool is_dead();
 };
 
 //Prototypes
