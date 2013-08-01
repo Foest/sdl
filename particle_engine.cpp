@@ -132,6 +132,7 @@ int main(int argc, char* args[])
 {
   int alpha = SDL_ALPHA_OPAQUE;
   Timer fps;
+  Dot myDot;
   bool quit = false;
 
   if(init() == false)
@@ -153,46 +154,27 @@ int main(int argc, char* args[])
 
     while(SDL_PollEvent(&event))
     {
+      myDot.handle_input();
+
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
 
-    Uint8 *keystates = SDL_GetKeyState(NULL);
 
-    //TODO: following needs to be in loop
-    if(keystates[SDLK_UP])
+    myDot.move();
+
+
+    if(SDL_Flip(screen) == -1)
     {
-      if(alpha < SDL_ALPHA_OPAQUE)
-      {
-        alpha += 5;
-      }
+      return 1;
     }
 
-    if(keystates[SDLK_DOWN])
+    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
     {
-      if(alpha > SDL_ALPHA_TRANSPARENT)
-      {
-        alpha -= 5;
-      }
+      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
     }
-
-      SDL_SetAlpha(front, SDL_SRCALPHA, alpha);
-
-      apply_surface(0, 0, back, screen);
-
-      apply_surface(0, 0, front, screen);
-
-      if(SDL_Flip(screen) == -1)
-      {
-        return 1;
-      }
-
-      if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-      {
-        SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-      }
   }
 
   clean_up();
