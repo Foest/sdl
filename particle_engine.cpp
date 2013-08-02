@@ -253,19 +253,27 @@ bool init()
 
 bool load_files()
 {
-  back = load_image("fadein.png");
+  dot = load_image("dot.bmp");
 
-  if(back == NULL)
+  if(dot == NULL)
   {
     return false;
   }
 
-  front = load_image("fadeout.png");
+  red = load_image("red.bmp");
+  green = load_image("green.bmp");
+  blue = load_image("blue.bmp");
+  shimmer = load_image("shimmer.bmp");
 
-  if(front == NULL)
+  if((shimmer == NULL) || (red == NULL) || (green == NULL) || (blue == NULL))
   {
     return false;
   }
+
+  SDL_SetAlpha(red, SDL_SRCALPHA | SDL_RLEACCEL, 192);
+  SDL_SetAlpha(blue, SDL_SRCALPHA | SDL_RLEACCEL, 192);
+  SDL_SetAlpha(green, SDL_SRCALPHA | SDL_RLEACCEL, 192);
+  SDL_SetAlpha(shimmer, SDL_SRCALPHA | SDL_RLEACCEL, 192);
 
   return true;
 }
