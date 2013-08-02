@@ -164,7 +164,8 @@ int main(int argc, char* args[])
 
 
     myDot.move();
-
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    myDot.show();
 
     if(SDL_Flip(screen) == -1)
     {
