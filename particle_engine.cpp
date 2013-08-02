@@ -357,48 +357,7 @@ bool Timer::is_paused()
 
 void Dot::handle_input()
 {
-  if(event.type == SDL_JOYAXISMOTION)
-  {
-    if(event.jaxis.which == 0)
-    {
-      if(event.jaxis.axis == 0)
-      {
-        if((event.jaxis.value > - 8000) && (event.jaxis.value < 8000))
-        {
-          xVel = 0;
-        }
-        else
-        {
-          if(event.jaxis.value < 0)
-          {
-            xVel = -DOT_WIDTH / 2;
-          }
-          else
-          {
-            xVel = DOT_WIDTH / 2;
-          }
-        }
-      }
-      else if((event.jaxis.value == 1))
-      {
-        if((event.jaxis.value > -8000))
-        {
-          yVel = 0;
-        }
-        else
-        {
-          if(event.jaxis.value < 0)
-          {
-            yVel = -DOT_HEIGHT / 2;
-          }
-          else
-          {
-            yVel = DOT_HEIGHT / 2;
-          }
-        }
-      }
-    }
-  }
+  //TODO:
 }
 
 Dot::Dot()
