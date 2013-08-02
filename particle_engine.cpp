@@ -280,8 +280,11 @@ bool load_files()
 
 void clean_up()
 {
-  SDL_FreeSurface(back);
-  SDL_FreeSurface(front);
+  SDL_FreeSurface(dot);
+  SDL_FreeSurface(red);
+  SDL_FreeSurface(green);
+  SDL_FreeSurface(blue);
+  SDL_FreeSurface(shimmer);
 
   SDL_Quit();
 }
