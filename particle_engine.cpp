@@ -244,7 +244,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Particle Test", NULL);
+  SDL_WM_SetCaption("Particle Engine", NULL);
 
   srand(SDL_GetTicks());
 
@@ -534,7 +534,7 @@ Window::Window()
     windowOK = true;
   }
 
-  SDL_WM_SetCaption("Window Event Test", NULL);
+  SDL_WM_SetCaption("Particle Engine", NULL);
 
   windowed = true;
 }
