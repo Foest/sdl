@@ -19,7 +19,6 @@ const int DOT_HEIGHT = 20;
 const int TOTAL_PARTICLES = 20;
 
 //Globals
-SDL_Surface *front = NULL;
 SDL_Surface *dot = NULL;
 SDL_Surface *shimmer= NULL;
 SDL_Surface *blue= NULL;
@@ -28,10 +27,7 @@ SDL_Surface *red= NULL;
 SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
 SDL_Event event;
-SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-TTF_Font *font = NULL;
 SDL_Color textColor = {0xFF, 0xFF, 0xFF};
-SDL_Joystick *stick = NULL;
 
 //Structs/Classes
 struct Circle
@@ -91,32 +87,6 @@ class Timer
     int get_ticks();
     bool is_started();
     bool is_paused();
-};
-
-class StringInput
-{
-  private:
-    std::string str;
-    SDL_Surface *text;
-
-  public:
-    StringInput();
-    ~StringInput();
-    void handle_input();
-    void show_centered();
-};
-
-class Window
-{
-  private:
-    bool windowed;
-    bool windowOK;
-
-  public:
-    Window();
-    void handle_events();
-    void toggle_fullscreen();
-    bool error();
 };
 
 //Prototypes
@@ -440,19 +410,6 @@ void Dot::show_particles()
   }
 }
 
-StringInput::StringInput()
-{
-  str = "";
-  text = NULL;
-  SDL_EnableUNICODE(SDL_ENABLE);
-}
-
-StringInput::~StringInput()
-{
-  SDL_FreeSurface(text);
-  SDL_EnableUNICODE(SDL_DISABLE);
-}
-
 void Dot::set_x(int X)
 {
   x = X;
@@ -471,172 +428,6 @@ int Dot::get_x()
 int Dot::get_y()
 {
   return y;
-}
-
-void StringInput::show_centered()
-{
-  if(text != NULL)
-  {
-    apply_surface((SCREEN_WIDTH - text->w) / 2, (SCREEN_HEIGHT - text->h) / 2, text, screen);
-  }
-}
-
-void StringInput::handle_input()
-{
-  if(event.type == SDL_KEYDOWN)
-  {
-    std::string temp = str;
-
-    if(str.length() <= 16)
-    {
-      if(event.key.keysym.unicode == (Uint16)' ')
-      {
-        str += (char)event.key.keysym.unicode;
-      }
-      else if((event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9'))
-      {
-        str += (char)event.key.keysym.unicode;
-      }
-      else if((event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Z'))
-      {
-        str += (char)event.key.keysym.unicode;
-      }
-      else if((event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))
-      {
-        str += (char)event.key.keysym.unicode;
-      }
-    }
-
-    if((event.key.keysym.sym == SDLK_BACKSPACE) && (str.length() != 0))
-    {
-      str.erase(str.length() - 1);
-    }
-
-    if(str != temp)
-    {
-      SDL_FreeSurface(text);
-      text = TTF_RenderText_Solid(font, str.c_str(), textColor);
-    }
-  }
-}
-
-Window::Window()
-{
-  screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE);
-
-  if(screen == NULL)
-  {
-    windowOK = false;
-    return;
-  }
-  else
-  {
-    windowOK = true;
-  }
-
-  SDL_WM_SetCaption("Particle Engine", NULL);
-
-  windowed = true;
-}
-
-void Window::handle_events()
-{
-  if(windowOK == false)
-  {
-    return;
-  }
-
-  if(event.type == SDL_VIDEORESIZE)
-  {
-    screen = SDL_SetVideoMode(event.resize.w, event.resize.h, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE);
-
-    if(screen == NULL)
-    {
-      windowOK = false;
-      return;
-    }
-  }
-  else if((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
-  {
-    toggle_fullscreen();
-  }
-  else if(event.type == SDL_ACTIVEEVENT)
-  {
-    if(event.active.state & SDL_APPACTIVE)
-    {
-      if(event.active.gain == 0)
-      {
-        SDL_WM_SetCaption("Window Event Test: Iconified", NULL);
-      }
-      else
-      {
-        SDL_WM_SetCaption("Window Event Test", NULL);
-      }
-    }
-    else if(event.active.state & SDL_APPINPUTFOCUS)
-    {
-      if(event.active.gain == 0)
-      {
-        SDL_WM_SetCaption("Window Event Test: Keyboard Focus Lost", NULL);
-      }
-      else
-      {
-        SDL_WM_SetCaption("Window Event Test", NULL);
-      }
-    }
-    else if(event.active.state & SDL_APPMOUSEFOCUS)
-    {
-      if(event.active.gain == 0)
-      {
-        SDL_WM_SetCaption("Window Event Test: Mouse Focus Lost", NULL);
-      }
-      else
-      {
-        SDL_WM_SetCaption("Window Event Test", NULL);
-      }
-    }
-  }
-  else if(event.type == SDL_VIDEOEXPOSE)
-  {
-    if(SDL_Flip(screen) == -1)
-    {
-      windowOK = false;
-      return;
-    }
-  }
-}
-
-void Window::toggle_fullscreen()
-{
-  if(windowed == true)
-  {
-    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE | SDL_FULLSCREEN);
-
-    if(screen == NULL)
-    {
-      windowOK = false;
-      return;
-    }
-
-    windowed = false;
-  }
-  else if(windowed == false)
-  {
-    screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE | SDL_RESIZABLE );
-
-    if(screen == NULL)
-    {
-      windowOK = false;
-      return;
-    }
-
-    windowed = true;
-  }
-}
-
-bool Window::error()
-{
-  return !windowOK;
 }
 
 Particle::Particle(int X, int Y)
