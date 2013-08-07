@@ -108,6 +108,19 @@ class Timer
     bool is_paused();
 };
 
+class Tile
+{
+  private:
+    SDL_Rect box;
+    int type;
+
+  public:
+    Tile(int x, int y, int tileType);
+    void show();
+    int get_type();
+    SDL_Rect get_box();
+};
+
 //Prototypes
 struct Circle;
 bool init();
