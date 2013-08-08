@@ -69,25 +69,6 @@ class Particle
     bool is_dead();
 };
 
-class Dot
-{
-  private:
-    int x, y;
-    int xVel, yVel;
-    Particle *particles[TOTAL_PARTICLES];
-
-  public:
-    Dot();
-    ~Dot();
-    void handle_input();
-    void move();
-    void show();
-    void show_particles();
-    void set_x(int X);
-    void set_y(int Y);
-    int get_x();
-    int get_y();
-};
 class Timer
 {
   private:
@@ -119,6 +100,20 @@ class Tile
     void show();
     int get_type();
     SDL_Rect get_box();
+};
+
+class Dot
+{
+  private:
+    SDL_Rect box;
+    int xVel, yVel;
+
+  public:
+    Dot();
+    void handle_input();
+    void move(Tile *tiles[]);
+    void show();
+    void set_camera();
 };
 
 //Prototypes
