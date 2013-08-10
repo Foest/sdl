@@ -502,3 +502,11 @@ Tile::Tile(int x, int y, int tileType)
   box.h = TILE_HEIGHT;
   type = tileType;
 }
+
+void Tile::show()
+{
+  if(check_collision(camera, box) == true)
+  {
+    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[type]);
+  }
+}
