@@ -510,3 +510,13 @@ void Tile::show()
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[type]);
   }
 }
+
+int Tile::get_type()
+{
+  return type;
+}
+
+SDL_Rect Tile::get_box()
+{
+  return box;
+}
