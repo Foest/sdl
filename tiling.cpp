@@ -520,3 +520,16 @@ SDL_Rect Tile::get_box()
 {
   return box;
 }
+
+bool set_tiles(Tile *tiles[])
+{
+  int x = 0, y = 0;
+  std::ifstream map("lazy.map");
+
+  if(map == NULL)
+  {
+    return false;
+  }
+
+  //TODO
+}
