@@ -531,5 +531,34 @@ bool set_tiles(Tile *tiles[])
     return false;
   }
 
-  //TODO
+  for(int t = 0; t < TOTAL_TILES; t++)
+  {
+    int tileType = -1;
+    map >> tileType;
+    if(map.fail() == true)
+    {
+      map.close();
+      return false;
+    }
+
+    if((tileType >= 0) && (tileType < TILE_SPRITES))
+    {
+      tiles[t] = new Tile(x, y, tileType);
+    }
+    else
+    {
+      map.close();
+      return false;
+    }
+
+    x += TILE_WIDTH;
+    if(x >= LEVEL_WIDTH)
+    {
+      x = 0;
+      y+= TILE_HEIGHT;
+    }
+  }
+
+  map.close();
+  return true;
 }
