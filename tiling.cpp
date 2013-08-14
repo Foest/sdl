@@ -389,20 +389,19 @@ Dot::Dot()
   }
 }
 
-void Dot::move()
+void Dot::move(Tile *tiles[])
 {
-  x += xVel;
-
-  if((x < 0) || (x + DOT_WIDTH > SCREEN_WIDTH))
+  box.x += xVel;
+  if((box.x < 0) || (box.x + DOT_WIDTH > LEVEL_WIDTH) || touches_wall(box, tiles))
   {
-    x -= xVel;
+    box.x -= xVel
   }
 
-  y += yVel;
+  box.y += yVel;
 
-  if((y < 0) || (y + DOT_HEIGHT > SCREEN_HEIGHT))
+  if((box.y < 0) || (box.y + DOT_HEIGHT > LEVEL_HEIGHT) || touches_wall(box, tiles))
   {
-    y -= yVel;
+    box.y -= yVel;
   }
 }
 
