@@ -278,10 +278,12 @@ bool load_files()
 void clean_up()
 {
   SDL_FreeSurface(dot);
-  SDL_FreeSurface(red);
-  SDL_FreeSurface(green);
-  SDL_FreeSurface(blue);
-  SDL_FreeSurface(shimmer);
+  SDL_FreeSurface(tileSheet);
+
+  for(int t = 0; t < TOTAL_TILES; t++)
+  {
+    delete tiles[t];
+  }
 
   SDL_Quit();
 }
