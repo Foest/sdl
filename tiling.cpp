@@ -127,10 +127,10 @@ void clean_up();
 //Functions
 int main(int argc, char* args[])
 {
-  int alpha = SDL_ALPHA_OPAQUE;
   Timer fps;
   Dot myDot;
   bool quit = false;
+  Tile *tiles[TOTAL_TILES];
 
   if(init() == false)
   {
@@ -139,6 +139,13 @@ int main(int argc, char* args[])
 
   //Load the files
   if(load_files() == false)
+  {
+    return 1;
+  }
+
+  clip_tiles();
+
+  if(set_tiles(tiles) == false)
   {
     return 1;
   }
@@ -159,9 +166,14 @@ int main(int argc, char* args[])
       }
     }
 
+    myDot.move(tiles);
+    myDot.set_camera();
 
-    myDot.move();
-    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    for(int t = 0; t < TOTAL_TILES; t++)
+    {
+      tiles[t]->show();
+    }
+
     myDot.show();
 
     if(SDL_Flip(screen) == -1)
