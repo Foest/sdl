@@ -13,13 +13,15 @@ const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const int DOT_WIDTH = 20;
 const int DOT_HEIGHT = 20;
-const int TOTAL_PARTICLES = 20;
+//const int TOTAL_PARTICLES = 20;
 
 
+const int LEVEL_WIDTH = 1280;
+const int LEVEL_HEIGHT = 960;
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
 const int TOTAL_TILES = 192;
-const int TOTAL_SPRITES = 12;
+const int TILE_SPRITES = 12;
 
 const int TILE_RED = 0;
 const int TILE_GREEN = 1;
@@ -42,8 +44,13 @@ SDL_Surface *green= NULL;
 SDL_Surface *red= NULL;
 SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
+SDL_Surface *tilesSheet = NULL;
+
 SDL_Event event;
 SDL_Color textColor = {0xFF, 0xFF, 0xFF};
+
+SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+SDL_Rect clips[TILE_SPRITES];
 
 //Structs/Classes
 struct Circle
