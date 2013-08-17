@@ -1,11 +1,8 @@
-#include "iostream"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
 #include <sstream>
 #include <string>
-#include <vector>
-#include <cmath>
 #include <fstream>
 #include <cstdlib>
 
