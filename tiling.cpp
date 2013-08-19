@@ -127,6 +127,7 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, 
 SDL_Surface *load_image(std::string filename);
 bool load_files();
 void clean_up();
+void clip_tiles();
 
 //Functions
 int main(int argc, char* args[])
@@ -303,6 +304,11 @@ void clean_up()
 
   SDL_Quit();
 }
+
+void clip_tiles()
+{
+}
+
 
 Timer::Timer()
 {
