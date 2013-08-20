@@ -307,6 +307,22 @@ void clean_up()
 
 void clip_tiles()
 {
+  clips[TILE_RED].x = 0;
+  clips[TILE_RED].y = 0;
+  clips[TILE_RED].w = TILE_WIDTH;
+  clips[TILE_RED].h = TILE_HEIGHT;
+
+  clips[TILE_GREEN].x = 0;
+  clips[TILE_GREEN].y = 80;
+  clips[TILE_GREEN].w = TILE_WIDTH;
+  clips[TILE_GREEN].h = TILE_HEIGHT;
+
+  clips[TILE_BLUE].x = 0;
+  clips[TILE_BLUE].y = 160;
+  clips[TILE_BLUE].w = TILE_WIDTH;
+  clips[TILE_BLUE].h = TILE_HEIGHT;
+
+  //TODO:init other tiles
 }
 
 
