@@ -327,6 +327,31 @@ void clip_tiles()
   clips[TILE_TOPLEFT].w = TILE_WIDTH;
   clips[TILE_TOPLEFT].h = TILE_HEIGHT;
 
+  clips[TILE_LEFT].x = 80;
+  clips[TILE_LEFT].y = 80;
+  clips[TILE_LEFT].w = TILE_WIDTH;
+  clips[TILE_LEFT].h = TILE_HEIGHT;
+
+  clips[TILE_BOTTOMLEFT].x = 80;
+  clips[TILE_BOTTOMLEFT].y = 160;
+  clips[TILE_BOTTOMLEFT].w = TILE_WIDTH;
+  clips[TILE_BOTTOMLEFT].h = TILE_HEIGHT;
+
+  clips[TILE_TOP].x = 160;
+  clips[TILE_TOP].y = 0;
+  clips[TILE_TOP].w = TILE_WIDTH;
+  clips[TILE_TOP].h = TILE_HEIGHT;
+
+  clips[TILE_CENTER].x = 160;
+  clips[TILE_CENTER].y = 80;
+  clips[TILE_CENTER].w = TILE_WIDTH;
+  clips[TILE_CENTER].h = TILE_HEIGHT;
+
+  clips[TILE_BOTTOM].x = 160;
+  clips[TILE_BOTTOM].y = 160;
+  clips[TILE_BOTTOM].w = TILE_WIDTH;
+  clips[TILE_BOTTOM].h = TILE_HEIGHT;
+
   //TODO:init other tiles
 }
 
