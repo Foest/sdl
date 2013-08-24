@@ -128,6 +128,7 @@ SDL_Surface *load_image(std::string filename);
 bool load_files();
 void clean_up();
 void clip_tiles();
+bool set_tiles(Tile *tiles[]);
 
 //Functions
 int main(int argc, char* args[])
