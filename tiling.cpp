@@ -32,7 +32,7 @@ const int TILE_TOPRIGHT= 5;
 const int TILE_RIGHT= 6;
 const int TILE_BOTTOMRIGHT= 7;
 const int TILE_BOTTOM= 8;
-const int TILE_BOTTONLEFT= 9;
+const int TILE_BOTTOMLEFT= 9;
 const int TILE_LEFT= 10;
 const int TILE_TOPLEFT= 11;
 
