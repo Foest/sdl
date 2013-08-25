@@ -462,8 +462,10 @@ void Dot::handle_input()
 
 Dot::Dot()
 {
-  x = 0;
-  y = 0;
+  box.x = 0;
+  box.y = 0;
+  box.w = DOT_WIDTH;
+  box.h = DOT_HEIGHT;
   xVel = 0;
   yVel = 0;
 
