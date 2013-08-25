@@ -475,7 +475,7 @@ void Dot::move(Tile *tiles[])
   box.x += xVel;
   if((box.x < 0) || (box.x + DOT_WIDTH > LEVEL_WIDTH) || touches_wall(box, tiles))
   {
-    box.x -= xVel
+    box.x -= xVel;
   }
 
   box.y += yVel;
