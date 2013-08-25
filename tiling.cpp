@@ -126,7 +126,7 @@ bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
 bool load_files();
-void clean_up();
+void clean_up(Tile *tiles[]);
 void clip_tiles();
 bool set_tiles(Tile *tiles[]);
 
@@ -193,7 +193,7 @@ int main(int argc, char* args[])
     }
   }
 
-  clean_up();
+  clean_up(tiles);
   return 0;
 }
 
@@ -293,7 +293,7 @@ bool load_files()
   return true;
 }
 
-void clean_up()
+void clean_up(Tile *tiles[])
 {
   SDL_FreeSurface(dot);
   SDL_FreeSurface(tileSheet);
