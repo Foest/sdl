@@ -129,6 +129,7 @@ bool load_files();
 void clean_up(Tile *tiles[]);
 void clip_tiles();
 bool set_tiles(Tile *tiles[]);
+bool touches_wall(SDL_Rect box, Tile *tiles[]);
 
 //Functions
 int main(int argc, char* args[])
@@ -369,6 +370,20 @@ void clip_tiles()
   clips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
 }
 
+bool touches_wall(SDL_Rect box, Tile *tiles[])
+{
+  for(int t = 0; t < TOTAL_TILES; t++)
+  {
+    if((tiles[t]->get_type() >= TILE_CENTER) && (tiles[t]->get_type() <= TILE_TOPLIFT))
+    {
+      if(check_collisions(box, tiles[t]->get_box()) == true)
+      {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 Timer::Timer()
 {
