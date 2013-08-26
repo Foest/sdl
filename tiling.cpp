@@ -130,6 +130,7 @@ void clean_up(Tile *tiles[]);
 void clip_tiles();
 bool set_tiles(Tile *tiles[]);
 bool touches_wall(SDL_Rect box, Tile *tiles[]);
+bool check_collision(SDL_Rect A, SDL_Rect B);
 
 //Functions
 int main(int argc, char* args[])
@@ -374,15 +375,52 @@ bool touches_wall(SDL_Rect box, Tile *tiles[])
 {
   for(int t = 0; t < TOTAL_TILES; t++)
   {
-    if((tiles[t]->get_type() >= TILE_CENTER) && (tiles[t]->get_type() <= TILE_TOPLIFT))
+    if((tiles[t]->get_type() >= TILE_CENTER) && (tiles[t]->get_type() <= TILE_TOPLEFT))
     {
-      if(check_collisions(box, tiles[t]->get_box()) == true)
+      if(check_collision(box, tiles[t]->get_box()) == true)
       {
         return true;
       }
     }
   }
   return false;
+}
+
+bool check_collision(SDL_Rect A, SDL_Rect B)
+{
+  int leftA, leftB;
+  int rightA, rightB;
+  int topA, topB;
+  int bottomA, bottomB;
+  leftA = A.x;
+  rightA = A.x + A.w;
+  topA = A.y;
+  bottomA = A.y + A.h;
+  leftB = B.x;
+  topB = B.y;
+  rightB = B.x + B.w;
+  bottomB = B.y + B.h;
+
+  if(bottomA <= topB)
+  {
+    return false;
+  }
+
+  if(topA >= bottomB)
+  {
+    return false;
+  }
+
+  if(rightA <= leftB)
+  {
+    return false;
+  }
+
+  if(leftA >= rightB)
+  {
+    return false;
+  }
+  return true;
 }
 
 Timer::Timer()
