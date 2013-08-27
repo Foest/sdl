@@ -552,43 +552,6 @@ void Dot::show()
   apply_surface(box.x - camera.x, box.y - camera.y, dot, screen);
 }
 
-void Dot::show_particles()
-{
-  for(int p = 0; p < TOTAL_PARTICLES; p++)
-  {
-    if(particles[p]->is_dead() == true);
-    {
-      delete particles[p];
-      particles[p] = new Particle(x, y);
-    }
-  }
-
-  for(int p = 0; p < TOTAL_PARTICLES; p++)
-  {
-    particles[p]->show();
-  }
-}
-
-void Dot::set_x(int X)
-{
-  x = X;
-}
-
-void Dot::set_y(int Y)
-{
-  y = Y;
-}
-
-int Dot::get_x()
-{
-  return x;
-}
-
-int Dot::get_y()
-{
-  return y;
-}
-
 Particle::Particle(int X, int Y)
 {
   x = X - 5 + (rand() % 25);
