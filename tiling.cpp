@@ -499,6 +499,11 @@ Dot::Dot()
   yVel = 0;
 }
 
+void Dot::set_camera()
+{
+  //TODO:
+}
+
 void Dot::handle_input()
 {
   if(event.type == SDL_KEYDOWN)
