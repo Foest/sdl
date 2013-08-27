@@ -549,8 +549,7 @@ Dot::~Dot()
 
 void Dot::show()
 {
-  apply_surface(x, y, dot, screen);
-  show_particles();
+  apply_surface(box.x - camera.x, box.y - camera.y, dot, screen);
 }
 
 void Dot::show_particles()
