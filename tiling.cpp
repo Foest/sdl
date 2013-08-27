@@ -489,6 +489,16 @@ bool Timer::is_paused()
   return paused;
 }
 
+Dot::Dot()
+{
+  box.x = 0;
+  box.y = 0;
+  box.w = DOT_WIDTH;
+  box.h = DOT_HEIGHT;
+  xVel = 0;
+  yVel = 0;
+}
+
 void Dot::handle_input()
 {
   if(event.type == SDL_KEYDOWN)
@@ -513,16 +523,6 @@ void Dot::handle_input()
   }
 }
 
-Dot::Dot()
-{
-  box.x = 0;
-  box.y = 0;
-  box.w = DOT_WIDTH;
-  box.h = DOT_HEIGHT;
-  xVel = 0;
-  yVel = 0;
-}
-
 void Dot::move(Tile *tiles[])
 {
   box.x += xVel;
@@ -536,14 +536,6 @@ void Dot::move(Tile *tiles[])
   if((box.y < 0) || (box.y + DOT_HEIGHT > LEVEL_HEIGHT) || touches_wall(box, tiles))
   {
     box.y -= yVel;
-  }
-}
-
-Dot::~Dot()
-{
-  for (int p = 0; p < TOTAL_PARTICLES; p++)
-  {
-    delete particles[p];
   }
 }
 
