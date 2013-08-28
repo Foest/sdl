@@ -501,7 +501,10 @@ Dot::Dot()
 
 void Dot::set_camera()
 {
-  //TODO:
+  camera.x = (box.x + DOT_WIDTH / 2) - SCREEN_WIDTH / 2;
+  camera.y = (box.y + DOT_HEIGHT/ 2) - SCREEN_HEIGHT / 2;
+
+  //TODO:bounds checking
 }
 
 void Dot::handle_input()
