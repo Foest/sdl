@@ -270,27 +270,19 @@ bool init()
 
 bool load_files()
 {
-  dot = load_image("dot.bmp");
+  dot = load_image("dot.png");
 
   if(dot == NULL)
   {
     return false;
   }
 
-  red = load_image("red.bmp");
-  green = load_image("green.bmp");
-  blue = load_image("blue.bmp");
-  shimmer = load_image("shimmer.bmp");
+  tileSheet = load_image("tiles.png");
 
-  if((shimmer == NULL) || (red == NULL) || (green == NULL) || (blue == NULL))
+  if(tileSheet == NULL)
   {
     return false;
   }
-
-  SDL_SetAlpha(red, SDL_SRCALPHA | SDL_RLEACCEL, 192);
-  SDL_SetAlpha(blue, SDL_SRCALPHA | SDL_RLEACCEL, 192);
-  SDL_SetAlpha(green, SDL_SRCALPHA | SDL_RLEACCEL, 192);
-  SDL_SetAlpha(shimmer, SDL_SRCALPHA | SDL_RLEACCEL, 192);
 
   return true;
 }
