@@ -261,7 +261,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Particle Engine", NULL);
+  SDL_WM_SetCaption("Tiling", NULL);
 
   srand(SDL_GetTicks());
 
