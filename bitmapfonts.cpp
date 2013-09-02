@@ -120,6 +120,20 @@ class Dot
     void set_camera();
 };
 
+class BitmapFont
+{
+  private:
+    SDL_Surface *bitmap;
+    SDL_Rect chars[256];
+    int newLine, space;
+
+  public:
+    BitmapFont();
+    BitmapFont(SDL_Surface *surface);
+    void build_font(SDL_Surface *surface);
+    void show_text(int x, int y, std::string text, SDL_Surface *surface);
+};
+
 //Prototypes
 struct Circle;
 bool init();
