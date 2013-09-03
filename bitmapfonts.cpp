@@ -429,6 +429,12 @@ bool check_collision(SDL_Rect A, SDL_Rect B)
   return true;
 }
 
+Uint32 get_pixel32(int x, int y, SDL_Surface *surface)
+{
+  Uint32 *pixels = (Uint32 *)surface->pixels;
+  return pixels[(y * surface->w) + x];
+}
+
 Timer::Timer()
 {
   startTicks = 0;
