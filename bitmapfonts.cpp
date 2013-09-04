@@ -145,6 +145,7 @@ void clip_tiles();
 bool set_tiles(Tile *tiles[]);
 bool touches_wall(SDL_Rect box, Tile *tiles[]);
 bool check_collision(SDL_Rect A, SDL_Rect B);
+Uint32 get_pixel32(int x, int y, SDL_Surface * surface);
 
 //Functions
 int main(int argc, char* args[])
