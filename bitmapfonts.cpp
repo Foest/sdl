@@ -647,6 +647,19 @@ SDL_Rect Tile::get_box()
   return box;
 }
 
+BitmapFont::()
+{
+  bitmap = NULL;
+  newLine = 0;
+  space = 0;
+}
+
+BitmapFont::(SDL_Surface *surface)
+{
+  build_font(surface);
+}
+
+
 bool set_tiles(Tile *tiles[])
 {
   int x = 0, y = 0;
