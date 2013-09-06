@@ -45,6 +45,7 @@ SDL_Surface *red= NULL;
 SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
+SDL_Surface *bitmapFont= NULL;
 
 SDL_Event event;
 SDL_Color textColor = {0xFF, 0xFF, 0xFF};
