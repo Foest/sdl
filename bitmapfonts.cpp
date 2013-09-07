@@ -277,7 +277,7 @@ bool init()
     return false;
   }
 
-  SDL_WM_SetCaption("Tiling", NULL);
+  SDL_WM_SetCaption("Bitmap Font Test", NULL);
 
   srand(SDL_GetTicks());
 
