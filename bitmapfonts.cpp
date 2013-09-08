@@ -141,7 +141,7 @@ bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
 bool load_files();
-void clean_up(Tile *tiles[]);
+void clean_up();
 void clip_tiles();
 bool set_tiles(Tile *tiles[]);
 bool touches_wall(SDL_Rect box, Tile *tiles[]);
@@ -303,16 +303,9 @@ bool load_files()
   return true;
 }
 
-void clean_up(Tile *tiles[])
+void clean_up()
 {
-  SDL_FreeSurface(dot);
-  SDL_FreeSurface(tileSheet);
-
-  for(int t = 0; t < TOTAL_TILES; t++)
-  {
-    delete tiles[t];
-  }
-
+  SDL_FreeSurface(bitmapFont);
   SDL_Quit();
 }
 
