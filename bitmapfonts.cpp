@@ -286,16 +286,9 @@ bool init()
 
 bool load_files()
 {
-  dot = load_image("dot.png");
+  bitmapFont = load_image("lazyfont.png");
 
-  if(dot == NULL)
-  {
-    return false;
-  }
-
-  tileSheet = load_image("tiles.png");
-
-  if(tileSheet == NULL)
+  if(bitmapFont == NULL)
   {
     return false;
   }
