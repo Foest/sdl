@@ -151,8 +151,6 @@ Uint32 get_pixel32(int x, int y, SDL_Surface * surface);
 //Functions
 int main(int argc, char* args[])
 {
-  Timer fps;
-  Dot myDot;
   bool quit = false;
   Tile *tiles[TOTAL_TILES];
 
@@ -167,8 +165,6 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  clip_tiles();
-
   if(set_tiles(tiles) == false)
   {
     return 1;
@@ -177,41 +173,21 @@ int main(int argc, char* args[])
   //While user hasn't quit
   while(quit == false)
   {
-
-    fps.start();
-
     while(SDL_PollEvent(&event))
     {
-      myDot.handle_input();
-
       if(event.type == SDL_QUIT)
       {
         quit = true;
       }
     }
 
-    myDot.move(tiles);
-    myDot.set_camera();
-
-    for(int t = 0; t < TOTAL_TILES; t++)
-    {
-      tiles[t]->show();
-    }
-
-    myDot.show();
-
     if(SDL_Flip(screen) == -1)
     {
       return 1;
     }
-
-    if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-    {
-      SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-    }
   }
 
-  clean_up(tiles);
+  clean_up();
   return 0;
 }
 
