@@ -622,7 +622,6 @@ BitmapFont::(SDL_Surface *surface)
   build_font(surface);
 }
 
-
 bool set_tiles(Tile *tiles[])
 {
   int x = 0, y = 0;
@@ -663,4 +662,31 @@ bool set_tiles(Tile *tiles[])
 
   map.close();
   return true;
+}
+
+void BitmapFont::show_text(int x, int y, std::string text, SDL_Surface *surface)
+{
+  int X = x, Y = y;
+
+  if(bitmap != NULL)
+  {
+    for (int show = 0; text[show] != '\0'; show++)
+    {
+      if(text[show] == ' ')
+      {
+        X += space;
+      }
+      else if(text[show] == '\n')
+      {
+        Y += newLine;
+        X = x;
+      }
+      else
+      {
+        int ascii = (unsigned char) text[show];
+        apply_surface(X, Y, bitmap, surface, &chars[ascii]);
+        X += chars[ascii].w + 1;
+      }
+    }
+  }
 }
