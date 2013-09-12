@@ -1,126 +1,18 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
-#include "SDL/SDL_ttf.h"
-#include <sstream>
 #include <string>
-#include <fstream>
-#include <cstdlib>
 
 //Constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
-const int FRAMES_PER_SECOND = 20;
-const int DOT_WIDTH = 20;
-const int DOT_HEIGHT = 20;
-//const int TOTAL_PARTICLES = 20;
-
-
-const int LEVEL_WIDTH = 1280;
-const int LEVEL_HEIGHT = 960;
-const int TILE_WIDTH = 80;
-const int TILE_HEIGHT = 80;
-const int TOTAL_TILES = 192;
-const int TILE_SPRITES = 12;
-
-const int TILE_RED = 0;
-const int TILE_GREEN = 1;
-const int TILE_BLUE = 2;
-const int TILE_CENTER= 3;
-const int TILE_TOP= 4;
-const int TILE_TOPRIGHT= 5;
-const int TILE_RIGHT= 6;
-const int TILE_BOTTOMRIGHT= 7;
-const int TILE_BOTTOM= 8;
-const int TILE_BOTTOMLEFT= 9;
-const int TILE_LEFT= 10;
-const int TILE_TOPLEFT= 11;
 
 //Globals
-SDL_Surface *dot = NULL;
-SDL_Surface *shimmer= NULL;
-SDL_Surface *blue= NULL;
-SDL_Surface *green= NULL;
-SDL_Surface *red= NULL;
-SDL_Surface *back = NULL;
 SDL_Surface *screen = NULL;
-SDL_Surface *tileSheet = NULL;
 SDL_Surface *bitmapFont= NULL;
-
 SDL_Event event;
-SDL_Color textColor = {0xFF, 0xFF, 0xFF};
-
-SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-SDL_Rect clips[TILE_SPRITES];
 
 //Structs/Classes
-struct Circle
-{
-  int x, y;
-  int r;
-};
-
-class Particle
-{
-  private:
-    int x, y;
-    int frame;
-
-    SDL_Surface *type;
-
-  public:
-    Particle(int X, int Y);
-    void show();
-    bool is_dead();
-};
-
-class Timer
-{
-  private:
-    int startTicks;
-    int pausedTicks;
-
-    bool paused;
-    bool started;
-
-  public:
-    Timer();
-    void start();
-    void stop();
-    void pause();
-    void unpause();
-    int get_ticks();
-    bool is_started();
-    bool is_paused();
-};
-
-class Tile
-{
-  private:
-    SDL_Rect box;
-    int type;
-
-  public:
-    Tile(int x, int y, int tileType);
-    void show();
-    int get_type();
-    SDL_Rect get_box();
-};
-
-class Dot
-{
-  private:
-    SDL_Rect box;
-    int xVel, yVel;
-
-  public:
-    Dot();
-    void handle_input();
-    void move(Tile *tiles[]);
-    void show();
-    void set_camera();
-};
-
 class BitmapFont
 {
   private:
@@ -136,7 +28,6 @@ class BitmapFont
 };
 
 //Prototypes
-struct Circle;
 bool init();
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect *clip = NULL);
 SDL_Surface *load_image(std::string filename);
