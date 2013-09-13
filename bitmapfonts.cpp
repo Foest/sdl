@@ -33,7 +33,6 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, 
 SDL_Surface *load_image(std::string filename);
 bool load_files();
 void clean_up();
-void clip_tiles();
 bool check_collision(SDL_Rect A, SDL_Rect B);
 Uint32 get_pixel32(int x, int y, SDL_Surface * surface);
 
@@ -165,69 +164,6 @@ void clean_up()
 {
   SDL_FreeSurface(bitmapFont);
   SDL_Quit();
-}
-
-void clip_tiles()
-{
-  clips[TILE_RED].x = 0;
-  clips[TILE_RED].y = 0;
-  clips[TILE_RED].w = TILE_WIDTH;
-  clips[TILE_RED].h = TILE_HEIGHT;
-
-  clips[TILE_GREEN].x = 0;
-  clips[TILE_GREEN].y = 80;
-  clips[TILE_GREEN].w = TILE_WIDTH;
-  clips[TILE_GREEN].h = TILE_HEIGHT;
-
-  clips[TILE_BLUE].x = 0;
-  clips[TILE_BLUE].y = 160;
-  clips[TILE_BLUE].w = TILE_WIDTH;
-  clips[TILE_BLUE].h = TILE_HEIGHT;
-
-  clips[TILE_TOPLEFT].x = 80;
-  clips[TILE_TOPLEFT].y = 0;
-  clips[TILE_TOPLEFT].w = TILE_WIDTH;
-  clips[TILE_TOPLEFT].h = TILE_HEIGHT;
-
-  clips[TILE_LEFT].x = 80;
-  clips[TILE_LEFT].y = 80;
-  clips[TILE_LEFT].w = TILE_WIDTH;
-  clips[TILE_LEFT].h = TILE_HEIGHT;
-
-  clips[TILE_BOTTOMLEFT].x = 80;
-  clips[TILE_BOTTOMLEFT].y = 160;
-  clips[TILE_BOTTOMLEFT].w = TILE_WIDTH;
-  clips[TILE_BOTTOMLEFT].h = TILE_HEIGHT;
-
-  clips[TILE_TOP].x = 160;
-  clips[TILE_TOP].y = 0;
-  clips[TILE_TOP].w = TILE_WIDTH;
-  clips[TILE_TOP].h = TILE_HEIGHT;
-
-  clips[TILE_CENTER].x = 160;
-  clips[TILE_CENTER].y = 80;
-  clips[TILE_CENTER].w = TILE_WIDTH;
-  clips[TILE_CENTER].h = TILE_HEIGHT;
-
-  clips[TILE_BOTTOM].x = 160;
-  clips[TILE_BOTTOM].y = 160;
-  clips[TILE_BOTTOM].w = TILE_WIDTH;
-  clips[TILE_BOTTOM].h = TILE_HEIGHT;
-
-  clips[TILE_TOPRIGHT].x = 240;
-  clips[TILE_TOPRIGHT].y = 0;
-  clips[TILE_TOPRIGHT].w = TILE_WIDTH;
-  clips[TILE_TOPRIGHT].h = TILE_HEIGHT;
-
-  clips[TILE_RIGHT].x = 240;
-  clips[TILE_RIGHT].y = 80;
-  clips[TILE_RIGHT].w = TILE_WIDTH;
-  clips[TILE_RIGHT].h = TILE_HEIGHT;
-
-  clips[TILE_BOTTOMRIGHT].x = 240;
-  clips[TILE_BOTTOMRIGHT].y = 160;
-  clips[TILE_BOTTOMRIGHT].w = TILE_WIDTH;
-  clips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
 }
 
 bool check_collision(SDL_Rect A, SDL_Rect B)
