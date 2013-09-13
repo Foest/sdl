@@ -34,8 +34,6 @@ SDL_Surface *load_image(std::string filename);
 bool load_files();
 void clean_up();
 void clip_tiles();
-bool set_tiles(Tile *tiles[]);
-bool touches_wall(SDL_Rect box, Tile *tiles[]);
 bool check_collision(SDL_Rect A, SDL_Rect B);
 Uint32 get_pixel32(int x, int y, SDL_Surface * surface);
 
@@ -232,21 +230,6 @@ void clip_tiles()
   clips[TILE_BOTTOMRIGHT].h = TILE_HEIGHT;
 }
 
-bool touches_wall(SDL_Rect box, Tile *tiles[])
-{
-  for(int t = 0; t < TOTAL_TILES; t++)
-  {
-    if((tiles[t]->get_type() >= TILE_CENTER) && (tiles[t]->get_type() <= TILE_TOPLEFT))
-    {
-      if(check_collision(box, tiles[t]->get_box()) == true)
-      {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 bool check_collision(SDL_Rect A, SDL_Rect B)
 {
   int leftA, leftB;
@@ -416,22 +399,6 @@ void Dot::handle_input()
   }
 }
 
-void Dot::move(Tile *tiles[])
-{
-  box.x += xVel;
-  if((box.x < 0) || (box.x + DOT_WIDTH > LEVEL_WIDTH) || touches_wall(box, tiles))
-  {
-    box.x -= xVel;
-  }
-
-  box.y += yVel;
-
-  if((box.y < 0) || (box.y + DOT_HEIGHT > LEVEL_HEIGHT) || touches_wall(box, tiles))
-  {
-    box.y -= yVel;
-  }
-}
-
 void Dot::show()
 {
   apply_surface(box.x - camera.x, box.y - camera.y, dot, screen);
@@ -474,33 +441,6 @@ bool Particle::is_dead()
   return false;
 }
 
-Tile::Tile(int x, int y, int tileType)
-{
-  box.x = x;
-  box.y = y;
-  box.w = TILE_WIDTH;
-  box.h = TILE_HEIGHT;
-  type = tileType;
-}
-
-void Tile::show()
-{
-  if(check_collision(camera, box) == true)
-  {
-    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[type]);
-  }
-}
-
-int Tile::get_type()
-{
-  return type;
-}
-
-SDL_Rect Tile::get_box()
-{
-  return box;
-}
-
 BitmapFont::()
 {
   bitmap = NULL;
@@ -511,48 +451,6 @@ BitmapFont::()
 BitmapFont::(SDL_Surface *surface)
 {
   build_font(surface);
-}
-
-bool set_tiles(Tile *tiles[])
-{
-  int x = 0, y = 0;
-  std::ifstream map("lazy.map");
-
-  if(map == NULL)
-  {
-    return false;
-  }
-
-  for(int t = 0; t < TOTAL_TILES; t++)
-  {
-    int tileType = -1;
-    map >> tileType;
-    if(map.fail() == true)
-    {
-      map.close();
-      return false;
-    }
-
-    if((tileType >= 0) && (tileType < TILE_SPRITES))
-    {
-      tiles[t] = new Tile(x, y, tileType);
-    }
-    else
-    {
-      map.close();
-      return false;
-    }
-
-    x += TILE_WIDTH;
-    if(x >= LEVEL_WIDTH)
-    {
-      x = 0;
-      y+= TILE_HEIGHT;
-    }
-  }
-
-  map.close();
-  return true;
 }
 
 void BitmapFont::show_text(int x, int y, std::string text, SDL_Surface *surface)
