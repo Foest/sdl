@@ -43,7 +43,6 @@ Uint32 get_pixel32(int x, int y, SDL_Surface * surface);
 int main(int argc, char* args[])
 {
   bool quit = false;
-  Tile *tiles[TOTAL_TILES];
 
   if(init() == false)
   {
@@ -56,10 +55,16 @@ int main(int argc, char* args[])
     return 1;
   }
 
-  if(set_tiles(tiles) == false)
-  {
-    return 1;
-  }
+  BitmapFont font(bitmapFont);
+  SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+  font.show_text(100, 100, "Bitmap Font:\nABCDEFGHIJKLMNOPQRSTUVWXYZ
+      \nabcdefghijklmnopqrstuvwxyz
+      \n-123456789", screen);
+
+    if(SDL_Flip(screen) == -1)
+    {
+      return 1;
+    }
 
   //While user hasn't quit
   while(quit == false)
@@ -70,11 +75,6 @@ int main(int argc, char* args[])
       {
         quit = true;
       }
-    }
-
-    if(SDL_Flip(screen) == -1)
-    {
-      return 1;
     }
   }
 
