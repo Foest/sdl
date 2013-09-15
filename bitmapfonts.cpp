@@ -250,5 +250,18 @@ void BitmapFont::show_text(int x, int y, std::string text, SDL_Surface *surface)
 
 void BitmapFont::build_font(SDL_Surface *surface)
 {
+  if(surface == NULL)
+  {
+    return;
+  }
+
+  bitmap = surface;
+  Uint32 bgColor = SDL_MapRGB(bitmap->format, 0, 0xFF, 0xFF);
+  int cellW = bitmap->w / 16;
+  int cellH = bitmap->h / 16;
+  int top = cellH;
+  int baseA = cellH;
+  int currentChar = 0;
+
 //TODO
 }
