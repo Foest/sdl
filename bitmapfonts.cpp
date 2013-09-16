@@ -287,7 +287,30 @@ void BitmapFont::build_font(SDL_Surface *surface)
           }
         }
       }
-      //TODO
+
+      for(int pCol_w = cellW - 1; pCol_w >= 0; pCol_w--)
+      {
+        for(int pRow_w = 0; pRow_w < cellH; pRow_w++)
+        {
+          int pX = (cellW * cols) + pCol_w;
+          int pY = (cellH * rows) + pRow_w;
+
+          if(get_pixel32(pX, pY, bitmap) != bgColor)
+          {
+            chars[currentChar].w = (pX - chars[currentChar].x) + 1;
+            pCol_w = -1;
+            pRow_w = cellH;
+          }
+        }
+      }
+
+      for(int pRow = 0; pRow < cellH; pRow++)
+      {
+        for(int pCol = 0; pCol < cellW; pCol++)
+        {
+          //TODO
+        }
+      }
     }
   }
 }
