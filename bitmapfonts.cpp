@@ -308,9 +308,50 @@ void BitmapFont::build_font(SDL_Surface *surface)
       {
         for(int pCol = 0; pCol < cellW; pCol++)
         {
-          //TODO
+          int pX = (cellW * cols) + pCol;
+          int pY = (cellH * rows) + pRow;
+
+          if(get_pixel32(pX, pY, bitmap) != bgColor)
+          {
+            if(pRow < top)
+            {
+              top = pRow;
+            }
+
+            pCol = cellW;
+            pRow = cellH;
+          }
         }
       }
+
+      if(currentChar == "A")
+      {
+        for(int pRow = cellH - 1; pRow >= 0; pRow--)
+        {
+          for(int pCol = 0; pCol < cellW; pCol++)
+          {
+            int pX = (cellW * cols) + pCol;
+            int pY = (cellH * rows) + pRow;
+
+            if(get_pixel32(pX, pY, bitmap) != bgColor)
+            {
+              baseA = pRow;
+              pCol = cellW;
+              pRow = -1;
+            }
+          }
+        }
+      }
+
+      currentChar++;
     }
+  }
+
+  space = cellW / 2;
+  newLine = baseA - top;
+  for(int t = 0; t < 256; t++)
+  {
+    chars[t].y += top;
+    chars[t].h -= top;
   }
 }
